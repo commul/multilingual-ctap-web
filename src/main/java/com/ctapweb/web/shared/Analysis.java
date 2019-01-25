@@ -4,6 +4,7 @@
 package com.ctapweb.web.shared;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gwt.view.client.ProvidesKey;
@@ -26,6 +27,7 @@ public class Analysis implements Serializable {
 	private long featureSetID;
 	private String featureSetName;
 	private Date createDate;
+	private String language;
 
 	/**
 	 * The key provider that provides the unique ID of a contact.
@@ -66,6 +68,14 @@ public class Analysis implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 	public String getDescription() {
@@ -131,13 +141,18 @@ public class Analysis implements Serializable {
 	public void setTagFilterLogic(String tagFilterLogic) {
 		this.tagFilterLogic = tagFilterLogic;
 	}
-	
+
 	public static class TagFilterLogic {
 		public static String NOFILTER = "NOFILTER"; 
 		public static String EQUALS = "EQUALS"; 
 		public static String STARTSWITH = "STARTSWITH"; 
 		public static String CONTAINS = "CONTAINS"; 
 		public static String ENDSWITH = "ENDSWITH"; 
+	}
+	
+	public static class AnalysisLanguageOptions {
+		public static String ENGLISH = "EN"; 
+		public static String GERMAN = "DE";  
 	}
 	
 }

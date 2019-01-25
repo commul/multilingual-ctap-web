@@ -303,7 +303,7 @@ public class CorpusManagerServiceImpl extends RemoteServiceServlet implements Co
 
 			ResultSet rs = ps.executeQuery();
 
-			// get infomation of all text
+			// get information of all text
 			while(rs.next()) {
 				CorpusText text = new CorpusText();
 				text.setId(rs.getLong("id"));

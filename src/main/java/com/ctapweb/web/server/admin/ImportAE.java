@@ -5,6 +5,7 @@ package com.ctapweb.web.server.admin;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
+import org.apache.uima.resource.metadata.Capability;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
 
@@ -29,6 +31,7 @@ import com.ctapweb.web.server.logging.LogMarker;
 import com.ctapweb.web.shared.AnalysisEngine;
 import com.ctapweb.web.shared.exception.AEDependencyException;
 import com.ctapweb.web.shared.exception.UIMAException;
+import com.google.gwt.user.client.rpc.core.java.util.Arrays;
 
 /**
  * Imports analysis engines into the database.
@@ -56,7 +59,7 @@ public class ImportAE {
 				classLoader.getResource(ServerProperties.ANNOTATOR_FOLDER).getFile());
 		File featureAEFolder = FileUtils.getFile(
 				classLoader.getResource(ServerProperties.FEATUREAE_FOLDER).getFile());
-		
+
 		logger.info(LogMarker.CTAP_SERVER_MARKER, 
 				"Importing annotator AE descriptors from annotator folder...");
 		importAEDescriptorFolder(annotatorFolder, AnalysisEngine.AEType.ANNOTATOR);
@@ -101,7 +104,7 @@ public class ImportAE {
 			throws SQLException, AEDependencyException {
 		//get dependency from description
 		List<Long> dependencyList = getDependencyListFromDescription(description);
-		
+
 		String insertStr = "INSERT INTO ae_dependency (ae_id, dep_ae_id) "
 				+ "VALUES (?, ?)";
 		PreparedStatement ps = dbConnection.prepareStatement(insertStr);
@@ -183,9 +186,9 @@ public class ImportAE {
 
 	public void importDescriptorFile(File descriptorFile, String aeType)
 			throws IOException, UIMAException, SQLException, AEDependencyException {
-			populateDB(descriptorFile, aeType);
+		populateDB(descriptorFile, aeType);
 
-			updateAEDependency();
+		updateAEDependency();
 	}
 
 
@@ -199,6 +202,12 @@ public class ImportAE {
 		String vendor = aeMetaData.getVendor();
 		String description = aeMetaData.getDescription();
 		String descriptorFileContent = FileUtils.readFileToString(descriptorFile);
+		List<String> supportedLanguages = new ArrayList<String>();
+		for (Capability curAECapability : aeMetaData.getCapabilities()) {
+			for (String curLanguage : curAECapability.getLanguagesSupported()) {
+				supportedLanguages.add(curLanguage);
+			}
+		}
 
 		//check if AE already in database
 		if(isAEExits(descriptorFile)) {
@@ -209,6 +218,7 @@ public class ImportAE {
 					+ "SET name = ?, type = ?, version = ?, "
 					+ "vendor = ?, description = ?,  "
 					+ "descriptor_file_content = ?, create_timestamp = CURRENT_TIMESTAMP "
+					+ ", supported_languages = ? " 
 					+ "WHERE descriptor_file_name = ?";
 			PreparedStatement ps = dbConnection.prepareStatement(updateStr);
 			ps.setString(1, aeName); 
@@ -217,7 +227,13 @@ public class ImportAE {
 			ps.setString(4, vendor);
 			ps.setString(5, description);
 			ps.setString(6, descriptorFileContent);
-			ps.setString(7, descriptorFile.getName());
+			ps.setArray(7, dbConnection.createArrayOf("text", supportedLanguages.toArray()));  
+			ps.setString(8, descriptorFile.getName());
+			
+			if(descriptorFile.getName().equalsIgnoreCase("POSDensity_Article_Feature.xml")) {  // TODO debugging, remove
+				logger.info(LogMarker.CTAP_SERVER_MARKER, "Sanity check: "+descriptorFileContent);
+			}
+			
 
 			ps.executeUpdate();
 		} else {
@@ -225,8 +241,10 @@ public class ImportAE {
 					"Descriptor file does not exists in DB, add AE info...");
 			//insert new
 			String insertStr = "INSERT INTO analysis_engine (name, type, version, vendor, description, "
-					+ "descriptor_file_name, descriptor_file_content, create_timestamp) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+					+ " descriptor_file_name, descriptor_file_content, "
+					+ " supported_languages," 
+					+ " create_timestamp) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
 			PreparedStatement ps = dbConnection.prepareStatement(insertStr);
 			ps.setString(1, aeName);
 			ps.setString(2, aeType);
@@ -235,6 +253,7 @@ public class ImportAE {
 			ps.setString(5, description);
 			ps.setString(6, descriptorFile.getName());
 			ps.setString(7, descriptorFileContent);
+			ps.setArray(8, dbConnection.createArrayOf("text", supportedLanguages.toArray()));
 
 			ps.executeUpdate();
 		}

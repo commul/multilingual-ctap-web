@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.ctapweb.web.shared.AnalysisEngine;
 import com.ctapweb.web.shared.FeatureSet;
+import com.ctapweb.web.shared.exception.AccessToResourceDeniedException;
+import com.ctapweb.web.shared.exception.DatabaseException;
+import com.ctapweb.web.shared.exception.UserNotLoggedInException;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface FeatureSelectorServiceAsync {
@@ -32,6 +35,7 @@ public interface FeatureSelectorServiceAsync {
 
 	void removeFeatureFromFS(long featureSetID, long featureID, AsyncCallback<Void> callback);
 
+	void doesFeatureSetSupportLanguage(long featureSetID, String languageCode, AsyncCallback<Boolean> callback);
 
 	void getFeatureCount(String keyword, AsyncCallback<Integer> callback);
 

@@ -48,7 +48,7 @@ import com.google.gwt.widgetideas.client.ProgressBar;
 public class AnalysisGenerator extends Composite {
 
 	private static AnalysisGeneratorUiBinder uiBinder = GWT.create(AnalysisGeneratorUiBinder.class);
-
+	
 	interface AnalysisGeneratorUiBinder extends UiBinder<Widget, AnalysisGenerator> {
 	}
 
@@ -81,6 +81,7 @@ public class AnalysisGenerator extends Composite {
 	@UiField HTMLPanel analysisDetailPanel;
 	@UiField TextBox createdOn;
 	@UiField TextBox analysisName;
+	@UiField ListBox analysisLanguageOptionsListBox;
 	@UiField TextArea analysisDescription;
 	@UiField ListBox tagFilterLogicListBox;
 	@UiField TextBox tagFilterKeyword;
@@ -362,6 +363,15 @@ public class AnalysisGenerator extends Composite {
 		};
 		analysisList.addColumn(featureSetColumn, "Feature Set");
 
+		// the analysis language column
+		TextColumn<Analysis> analysisLanguageColumn = new TextColumn<Analysis>() {
+			@Override
+			public String getValue(Analysis analysis) {
+				return analysis.getLanguage();
+			}
+		};
+		analysisList.addColumn(analysisLanguageColumn, "Language");
+
 		// the created date column
 		TextColumn<Analysis> createdColumn = new TextColumn<Analysis>() {
 			@Override
@@ -624,6 +634,8 @@ public class AnalysisGenerator extends Composite {
 		analysisIdHidden.setValue(analysis.getId() + "");
 		corpusIdHidden.setValue(analysis.getCorpusID() + "");
 		featureSetIdHidden.setValue(analysis.getFeatureSetID() + "");
+		setAnalysisLanguageListBox(analysis.getLanguage());
+		setTagFilterLogicListBox(analysis.getLanguage());
 
 		// get lists
 		getDetailPanelCorpusList();
@@ -726,6 +738,14 @@ public class AnalysisGenerator extends Composite {
 			}
 		}
 	}
+	//Sets the analysis language list box's selected item
+	private void setAnalysisLanguageListBox(String analysisLanguage) {
+		for(int i = 0; i < analysisLanguageOptionsListBox.getItemCount(); i++) {
+			if(analysisLanguage.equals(analysisLanguageOptionsListBox.getValue(i))) {
+				analysisLanguageOptionsListBox.setSelectedIndex(i);
+			}
+		}
+	}
 
 
 	private void hideDetailPanel() {
@@ -748,6 +768,7 @@ public class AnalysisGenerator extends Composite {
 					"You need to enter a name and select a corpus and a feature set for your analysis.");
 			return;
 		}
+		
 
 		//construct the analysis object
 		Analysis analysis = new Analysis();
@@ -758,6 +779,7 @@ public class AnalysisGenerator extends Composite {
 		analysis.setTagFilterLogic(tagFilterLogicListBox.getSelectedValue());
 		analysis.setCorpusID(Integer.parseInt(selectCorpus.getSelectedValue()));
 		analysis.setFeatureSetID(Integer.parseInt(selectFeatureSet.getSelectedValue()));
+		analysis.setLanguage(analysisLanguageOptionsListBox.getSelectedValue());
 
 		if (analysis.getId() == -1) {
 			// new analysis
@@ -793,8 +815,28 @@ public class AnalysisGenerator extends Composite {
 					showFeedbackPanel("alert-info", "Analysis details updated!");
 				}
 			});
+			
+
+			// Check if analysis language is fully supported by feature set
+			logger.finer("Requesting service doesFeatureSetSupportLanguage...");
+			Services.getFeatureSelectorService().doesFeatureSetSupportLanguage(analysis.getFeatureSetID(), analysis.getLanguage(), new AsyncCallback<Boolean>() {
+				@Override
+				public void onFailure(Throwable caught) {
+					logger.severe("Caught service exception " + caught);
+					Utils.showErrorPage(caught.getMessage());
+				}
+				@Override
+				public void onSuccess(Boolean result) {
+					logger.finer("Service doesFeatureSetSupportLanguage returned successfully: "+result);
+					if (!result) {
+						showFeedbackPanel("alert-warning", "The analysis language is not fully supported by the chosen feature set. Unsupported features will be skipped.");
+					}
+				}
+			});
 		}
 	}
+
+
 
 	//	private Analysis.TagFilterLogic getTagFilterLogic() {
 	//		Analysis.TagFilterLogic tagFilterLogic = Analysis.TagFilterLogic.NOFILTER;
@@ -892,6 +934,8 @@ public class AnalysisGenerator extends Composite {
 		newAnalysis.setCorpusName("");
 		newAnalysis.setFeatureSetID(0);	
 		newAnalysis.setFeatureSetName("");
+//		newAnalysis.setLanguage("");
+		newAnalysis.setLanguage(Analysis.AnalysisLanguageOptions.ENGLISH);  // have English as default
 		showDetailPanel(newAnalysis);
 	}
 

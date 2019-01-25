@@ -86,6 +86,13 @@ public class FeatureSetManager extends Composite {
 	@UiField Anchor selectAll;
 	@UiField Anchor selectClear;
 	@UiField Anchor selectReverse;
+
+	@UiField Anchor selectEnglishRightPanel;
+	@UiField Anchor selectEnglish;
+	@UiField Anchor selectGermanRightPanel;
+	@UiField Anchor selectGerman;
+	// add new language here
+	
 	@UiField Button deleteSelected;
 	@UiField Button addSelected;
 	@UiField Button showAll;
@@ -208,7 +215,6 @@ public class FeatureSetManager extends Composite {
 		availableFeatureCellTablePanel.add(pagerAvailableFeatureCellTable);
 	}
 
-	
 	//Shows all the available features whose name contains the keyword.
 	private void showAvailableFeatures(final String keyword) {
 		availableFeatureCellTable = new CellTable<AnalysisEngine>(AnalysisEngine.KEY_PROVIDER);
@@ -447,8 +453,14 @@ public class FeatureSetManager extends Composite {
 		selectAllRightPanel.getElement().getStyle().setCursor(Cursor.POINTER);
 		selectClearRightPanel.getElement().getStyle().setCursor(Cursor.POINTER);
 		selectReverseRightPanel.getElement().getStyle().setCursor(Cursor.POINTER);
+		// add new language here
 		showAll.setHTML(ICONBUTTONTEMPLATE.labeledButton("fa-filter", "Show All"));
 		showAllRightPanel.setHTML(ICONBUTTONTEMPLATE.labeledButton("fa-filter", "Show All"));
+		selectEnglish.getElement().getStyle().setCursor(Cursor.POINTER);
+		selectGerman.getElement().getStyle().setCursor(Cursor.POINTER);
+		selectEnglishRightPanel.getElement().getStyle().setCursor(Cursor.POINTER);
+		selectGermanRightPanel.getElement().getStyle().setCursor(Cursor.POINTER);
+		// add new language here
 	}
 	
 	private void setFeatureSetName() {
@@ -494,7 +506,7 @@ public class FeatureSetManager extends Composite {
 		selectedFeatureCellTable.addColumn(idColumn, "ID");
 		selectedFeatureCellTable.setColumnWidth(idColumn, "3%");
 
-		//the name column
+		// the name column
 		TextColumn<AnalysisEngine> titleColumn = new TextColumn<AnalysisEngine>() {
 			@Override
 			public String getValue(AnalysisEngine ae) {
@@ -503,7 +515,16 @@ public class FeatureSetManager extends Composite {
 		};
 		selectedFeatureCellTable.addColumn(titleColumn, "Feature Name");
 
-		//the detials button column
+		//the supported languages column
+		TextColumn<AnalysisEngine> supportedLanguagesColumn = new TextColumn<AnalysisEngine>() {
+			@Override
+			public String getValue(AnalysisEngine ae) {
+				return ae.getSupportedLanguagesAsString();
+			}
+		};
+		selectedFeatureCellTable.addColumn(supportedLanguagesColumn, "Languages");
+
+		//the details button column
 		SafeHtml detailsIcon =
 				ICONBUTTONTEMPLATE.iconButtonInCellTable("fa-info-circle");
 		ActionCell<AnalysisEngine> detailsCell = new ActionCell<>(detailsIcon, 
@@ -586,6 +607,15 @@ public class FeatureSetManager extends Composite {
 			}
 		};
 		availableFeatureCellTable.addColumn(titleColumn, "Feature Name");
+
+		// the supported languages column  
+		TextColumn<AnalysisEngine> supportedLanguagesColumn = new TextColumn<AnalysisEngine>() {
+			@Override
+			public String getValue(AnalysisEngine ae) {
+				return ae.getSupportedLanguagesAsString();
+			}
+		};
+		availableFeatureCellTable.addColumn(supportedLanguagesColumn, "Languages");
 
 		//the detials button column
 		SafeHtml detailsIcon =
@@ -796,7 +826,6 @@ public class FeatureSetManager extends Composite {
 		}
 	}
 
-
 	@UiHandler("selectClear")
 	void onSelectClearClick(ClickEvent e) {
 		clearFeedbackPanels();
@@ -825,6 +854,37 @@ public class FeatureSetManager extends Composite {
 					!availableFeatureSelectionModel.isSelected(complexityFeature));
 		}
 	}
+
+	@UiHandler("selectEnglish")
+	void onSelectEnglishClick(ClickEvent e) {
+		for(AnalysisEngine complexityFeature : selectedFeatureCellTable.getVisibleItems()) {
+			selectedFeatureListSelectionModel.setSelected(complexityFeature, 
+					complexityFeature.getSupportedLanguages().contains("en"));
+		}
+	}
+	@UiHandler("selectEnglishRightPanel")
+	void onSelectEnglishRightPanelClick(ClickEvent e) {
+		for(AnalysisEngine complexityFeature : availableFeatureCellTable.getVisibleItems()) {
+			availableFeatureSelectionModel.setSelected(complexityFeature, 
+					complexityFeature.getSupportedLanguages().contains("en"));
+		}
+	}
+
+	@UiHandler("selectGerman")
+	void onSelectGermanClick(ClickEvent e) {
+		for(AnalysisEngine complexityFeature : selectedFeatureCellTable.getVisibleItems()) {
+			selectedFeatureListSelectionModel.setSelected(complexityFeature, 
+					complexityFeature.getSupportedLanguages().contains("de"));
+		}
+	}
+	@UiHandler("selectGermanRightPanel")
+	void onSelectGermanRightPanelClick(ClickEvent e) {
+		for(AnalysisEngine complexityFeature : availableFeatureCellTable.getVisibleItems()) {
+			availableFeatureSelectionModel.setSelected(complexityFeature, 
+					complexityFeature.getSupportedLanguages().contains("de"));
+		}
+	}
+	// add new language here
 
 	@UiHandler("closeFeedbackPanel")
 	void onCloseFeedbackPanelClick(ClickEvent e) {

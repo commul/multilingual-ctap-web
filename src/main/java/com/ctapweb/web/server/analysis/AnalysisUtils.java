@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -50,7 +51,7 @@ public class AnalysisUtils {
 
 		return isUserOwner;
 	}
-
+	
 	/**
 	 * gets an analysis by ID. If it doesn't exist, returns null.
 	 * @param analysisID
@@ -61,12 +62,13 @@ public class AnalysisUtils {
 		Analysis analysis = new Analysis();
 
 		//get data from database
-		String queryStr = ""
+		String queryStr = "" 
 				+ "SELECT analysis.id, analysis.owner_id, analysis.name, "
 				+ "analysis.description, "
 				+ "analysis.corpus_id, corpus.name AS corpus_name, "
 				+ "analysis.tag_filter_logic, analysis.tag_filter_keyword, "
 				+ "analysis.featureset_id, feature_set.name AS featureset_name, "
+				+ "analysis.analysis_language, "
 				+ "analysis.create_timestamp "
 				+ "FROM analysis "
 				+ "JOIN corpus ON (analysis.corpus_id=corpus.id) "
@@ -78,7 +80,7 @@ public class AnalysisUtils {
 
 		ResultSet rs = ps.executeQuery();
 
-		// get infomation of analysis 
+		// get information of analysis 
 		if(rs.next()) {
 			analysis.setId(rs.getLong("id"));
 			analysis.setOwner_id(rs.getLong("owner_id"));
@@ -91,6 +93,7 @@ public class AnalysisUtils {
 			analysis.setCreateDate(rs.getDate("create_timestamp"));
 			analysis.setFeatureSetID(rs.getLong("featureset_id"));
 			analysis.setFeatureSetName(rs.getString("featureset_name"));
+			analysis.setLanguage(rs.getString("analysis_language"));
 		}
 
 		return analysis;
@@ -265,7 +268,7 @@ public class AnalysisUtils {
 	//construct an AE list to be added as cas processors
 	//Logic: each feature is obtained by running a series of AEs. Multiple features may use the same AEs.
 	//As a result, we need to make sure that the same AE is added to the CPE only once. 
-	//We also need to garantee the order in which the AEs are run for each feature. 
+	//We also need to guarantee the order in which the AEs are run for each feature. 
 	//As a result, the AE list is constructed by inserting subsequent AE dependencies into the first AE dependency.
 	//Then repeated AEs are deleted. 
 	public static List<AnalysisEngine> getCleanAEs(long analysisID) throws SQLException {
@@ -303,11 +306,12 @@ public class AnalysisUtils {
 		//get data from database;
 		String queryStr = "SELECT ae.id, ae.name, ae.type, ae.version,"
 				+ "ae.vendor, ae.description, ae.descriptor_file_name, "
+				+ "ae.supported_languages, "
 				+ "ae.descriptor_file_content, ae.create_timestamp "
 				+ "FROM analysis, fs_cf, analysis_engine as ae "
 				+ "WHERE analysis.featureset_id=fs_cf.fs_id "
 				+ "     AND fs_cf.cf_id=ae.id "
-				+ "     AND analysis.id = ? ";
+				+ "     AND analysis.id = ? "; 
 
 		PreparedStatement ps;
 		ps = dbConnection.prepareStatement(queryStr);
@@ -315,22 +319,23 @@ public class AnalysisUtils {
 
 		ResultSet rs = ps.executeQuery();
 
-		// get infomation of all AEs 
+		// get information of all AEs 
 		while(rs.next()) {
 			AnalysisEngine ae = new AnalysisEngine();
 			ae.setId(rs.getLong("id"));
 			ae.setName(rs.getString("name"));
 			ae.setType(rs.getString("type"));
+			ae.setSupportedLanguages(Arrays.asList((String[])rs.getArray("supported_languages").getArray()));
 			ae.setVersion(rs.getString("version"));
 			ae.setVendor(rs.getString("vendor"));
 			ae.setDescription(rs.getString("description"));
 			ae.setDescriptorFileName(rs.getString("descriptor_file_name"));
 			ae.setDescriptorFileContent(rs.getString("descriptor_file_content"));
 			ae.setCreateDate(rs.getDate("create_timestamp"));
-
+			
 			//get AE dependency
 			List<AnalysisEngine> dependencyList = AEUtils.getAEDependency(ae.getId());
-			dependencyList.add(ae); //adding the current AE, which is reuqired to get the analysis result
+			dependencyList.add(ae); //adding the current AE, which is required to get the analysis result
 			ae.setAeDependency(dependencyList);
 
 			aeList.add(ae);

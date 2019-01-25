@@ -654,7 +654,9 @@ implements ResultVisualizerService {
 		
 		try {
 			String queryStr = "SELECT DISTINCT a.id, a.owner_id, a.name, a.description, a.corpus_id,"
-					+ "a.tag_filter_logic, a.tag_filter_keyword, a.featureset_id, a.create_timestamp "
+					+ "a.tag_filter_logic, a.tag_filter_keyword, a.featureset_id, "
+					+ "a.analysis_language, "
+					+ "a.create_timestamp "
 					+ "FROM result, analysis AS a "
 					+ "WHERE result.analysis_id=a.id "
 					+ "     AND a.owner_id=?";
@@ -672,7 +674,7 @@ implements ResultVisualizerService {
 				analysis.setTagKeyword(rs.getString("tag_filter_keyword"));
 				analysis.setFeatureSetID(rs.getLong("featureset_id"));
 				analysis.setCreateDate(rs.getDate("create_timestamp"));
-
+				analysis.setLanguage(rs.getString("analysis_language"));
 				analysisList.add(analysis);
 			}
 		} catch (SQLException e) {

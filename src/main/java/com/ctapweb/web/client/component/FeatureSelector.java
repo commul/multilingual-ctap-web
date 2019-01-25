@@ -225,6 +225,15 @@ public class FeatureSelector extends Composite {
 		featureSetList.addColumn(descriptionColumn, "Description");
 		featureSetList.setColumnWidth(descriptionColumn, "50%");
 
+		// the supported languages column
+		TextColumn<FeatureSet> supportedLanguagesColumn = new TextColumn<FeatureSet>() {
+			@Override
+			public String getValue(FeatureSet featureSet) {
+				return featureSet.getSupportedLanguagesAsString();
+			}
+		};
+		featureSetList.addColumn(supportedLanguagesColumn, "Languages");
+
 		// the created date column
 		TextColumn<FeatureSet> createdColumn = new TextColumn<FeatureSet>() {
 			@Override

@@ -4,6 +4,7 @@
 package com.ctapweb.web.shared;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,27 +16,28 @@ import com.google.gwt.view.client.ProvidesKey;
  *
  */
 public class FeatureSet implements Serializable {
-	
+
 	private long id;
 	private long ownerId;
 	private String name;
 	private String description;
+	private List<String> supportedLanguages = new ArrayList<>(); 
 	private Date createDate;
-//	private List<ComplexityFeature> featureList;
-	
-    public static final ProvidesKey<FeatureSet> KEY_PROVIDER = new ProvidesKey<FeatureSet>() {
-	      @Override
-	      public Object getKey(FeatureSet item) {
-	        return item == null ? null : item.getId();
-	      }
-	    };	
+	//	private List<ComplexityFeature> featureList;
 
-	 /**
-	  * Empty constructor required by seriablization.
-	  */
-	  public FeatureSet() {
-		  
-	  }
+	public static final ProvidesKey<FeatureSet> KEY_PROVIDER = new ProvidesKey<FeatureSet>() {
+		@Override
+		public Object getKey(FeatureSet item) {
+			return item == null ? null : item.getId();
+		}
+	};	
+
+	/**
+	 * Empty constructor required by seriablization.
+	 */
+	public FeatureSet() {
+
+	}
 
 	public long getId() {
 		return id;
@@ -77,6 +79,21 @@ public class FeatureSet implements Serializable {
 		this.createDate = createDate;
 	}
 
+	public List<String> getSupportedLanguages() {
+		return supportedLanguages;
+	}
+	public String getSupportedLanguagesAsString() {
+		StringBuilder rval = new StringBuilder();
+		for (String l : supportedLanguages) {
+			rval.append(l);
+			rval.append(" ");
 
-	  
+		}
+		return rval.toString().trim();
+	}
+
+	public void setSupportedLanguages(List<String> supportedLanguages) {
+		this.supportedLanguages = supportedLanguages;
+	}
+
 }

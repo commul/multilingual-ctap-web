@@ -47,7 +47,6 @@ public class ImportCorpusServlet extends HttpServlet implements Servlet {
 			throws ServletException, IOException {
 		String serviceName = "importCorpusServlet";
 		this.request = req;
-
 		try {
 			long userID = logServiceStartAndGetUserID(serviceName);
 
@@ -97,7 +96,7 @@ public class ImportCorpusServlet extends HttpServlet implements Servlet {
 					CorpusText corpusText = new CorpusText();
 					corpusText.setCorpusID(corpusID);
 					corpusText.setTitle(item.getName());
-					corpusText.setContent(item.getString());
+					corpusText.setContent(item.getString("UTF-8"));
 					corpusText.setTagSet(tags);
 					
 					writeToDatabase(corpusText);

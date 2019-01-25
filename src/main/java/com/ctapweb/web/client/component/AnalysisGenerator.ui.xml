@@ -121,6 +121,17 @@
 									<g:TextArea height="200px" styleName="form-control"
 										ui:field="analysisDescription" />
 								</div>
+								<!-- by zweiss -->
+								<div class="form-group">
+									<p>Language</p>
+									<!-- <g:TextBox styleName="form-control" ui:field="analysisLanguage" />-->
+									<g:ListBox styleName="form-control" ui:field="analysisLanguageOptionsListBox">
+                                        <g:item value="EN">English</g:item>
+                                        <g:item value="DE">German</g:item>
+                                        <!-- new languages go here! e.g.: -->
+                                        <!-- <g:item value="IT">Italian</g:item> -->
+                                    </g:ListBox>
+								</div>
 
 
 								<div class="form-inline form-group">

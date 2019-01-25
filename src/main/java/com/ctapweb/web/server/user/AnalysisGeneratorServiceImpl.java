@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.logging.log4j.Level;
@@ -79,12 +80,14 @@ implements AnalysisGeneratorService {
 		ArrayList<Analysis> analysisList = new ArrayList<Analysis>(limit); 
 
 		//get data from database
-		String queryStr = ""
+		String queryStr = ""			 
 				+ "SELECT analysis.id, analysis.owner_id, analysis.name, "
 				+ "analysis.description, "
-				+ "analysis.corpus_id, corpus.name AS corpus_name, "
+				+ "analysis.corpus_id, "
+				+ "corpus.name AS corpus_name, "
 				+ "analysis.tag_filter_logic, tag_filter_keyword, "
 				+ "analysis.featureset_id, feature_set.name AS featureset_name, "
+				+ "analysis.analysis_language, "
 				+ "analysis.create_timestamp "
 				+ "FROM analysis "
 				+ "JOIN corpus ON (analysis.corpus_id=corpus.id) "
@@ -101,7 +104,7 @@ implements AnalysisGeneratorService {
 
 			ResultSet rs = ps.executeQuery();
 
-			// get infomation of all analysis of this user 
+			// get information of all analysis of this user 
 			while(rs.next()) {
 				Analysis analysis = new Analysis();
 				analysis.setId(rs.getLong("id"));
@@ -115,6 +118,7 @@ implements AnalysisGeneratorService {
 				analysis.setCreateDate(rs.getDate("create_timestamp"));
 				analysis.setFeatureSetID(rs.getLong("featureset_id"));
 				analysis.setFeatureSetName(rs.getString("featureset_name"));
+				analysis.setLanguage(rs.getString("analysis_language"));
 
 				analysisList.add(analysis);
 			}
@@ -166,11 +170,10 @@ implements AnalysisGeneratorService {
 				!featureSelectorServiceImpl.isUserFSOwner(userID, featureSetID)) {
 			throw logger.throwing(new AccessToResourceDeniedException());
 		}
-
 		String insertStr = "INSERT INTO "
-				+ "analysis (owner_id, name, description, corpus_id, tag_filter_logic, tag_filter_keyword, "
-				+ "featureset_id, create_timestamp) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+				+ "analysis "
+				+ "(owner_id, name, description, corpus_id, tag_filter_logic, tag_filter_keyword, featureset_id, analysis_language, create_timestamp) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
 		try {
 			PreparedStatement ps = dbConnection.prepareStatement(insertStr);
 			ps.setLong(1, userID);
@@ -180,6 +183,7 @@ implements AnalysisGeneratorService {
 			ps.setString(5, analysis.getTagFilterLogic());
 			ps.setString(6, analysis.getTagKeyword());
 			ps.setLong(7, analysis.getFeatureSetID());
+			ps.setString(8, analysis.getLanguage()); 
 
 			ps.executeUpdate();
 
@@ -244,10 +248,11 @@ implements AnalysisGeneratorService {
 					!featureSelectorServiceImpl.isUserFSOwner(userID, featureSetID)) {
 				throw logger.throwing(new AccessToResourceDeniedException());
 			}
-			
+
 			String updateStr = "UPDATE analysis SET name=?, description=?, corpus_id=?, "
 					+ "tag_filter_logic = ?, tag_filter_keyword=?, "
-					+ "featureset_id=? "
+					+ "featureset_id=?, "
+					+ "analysis_language = ? "
 					+ "WHERE id = ? AND owner_id = ?";
 			PreparedStatement ps = dbConnection.prepareStatement(updateStr);
 			ps.setString(1, analysisName);
@@ -256,8 +261,9 @@ implements AnalysisGeneratorService {
 			ps.setString(4, analysis.getTagFilterLogic());
 			ps.setString(5, analysis.getTagKeyword());
 			ps.setLong(6, featureSetID);
-			ps.setLong(7, analysisID);
-			ps.setLong(8, userID);
+			ps.setString(7, analysis.getLanguage());
+			ps.setLong(8, analysisID);
+			ps.setLong(9, userID);
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
@@ -286,7 +292,6 @@ implements AnalysisGeneratorService {
 			if(!AnalysisUtils.isUserAnalysisOwner(userID, analysis.getId())) {
 				throw logger.throwing(new AccessToResourceDeniedException());
 			}
-
 			RunAnalysis runAnalysis = new RunAnalysis(analysis);
 			runAnalysis.run();
 
@@ -364,7 +369,7 @@ implements AnalysisGeneratorService {
 				new ServiceRequestCompletedMessage(serviceName));
 		return analysisStatus;
 	}
-
+	
 	@Override
 	public Void updateAnalysisStatus(AnalysisStatus analysisStatus)
 			throws UserNotLoggedInException, AccessToResourceDeniedException, DatabaseException {

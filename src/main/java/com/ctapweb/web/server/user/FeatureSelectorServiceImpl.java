@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.logging.log4j.Level;
@@ -98,7 +99,9 @@ implements FeatureSelectorService {
 
 		//get data from database
 		String queryStr = ""
-				+ "SELECT id, owner_id, name, description, create_timestamp "
+				+ "SELECT id, owner_id, name, description"
+				+ ", supported_languages" 
+				+ ", create_timestamp " 
 				+ "FROM feature_set "
 				+ "WHERE owner_id=? "
 				+ "ORDER BY id DESC "
@@ -119,6 +122,7 @@ implements FeatureSelectorService {
 				featureSet.setOwnerId(rs.getLong("owner_id"));
 				featureSet.setName(rs.getString("name"));
 				featureSet.setDescription(rs.getString("description"));
+				featureSet.setSupportedLanguages(Arrays.asList((String[])rs.getArray("supported_languages").getArray())); 
 				featureSet.setCreateDate(rs.getDate("create_timestamp"));
 				featureSetList.add(featureSet);
 			}
@@ -142,13 +146,17 @@ implements FeatureSelectorService {
 		if(featureSet.getName().isEmpty()) {
 			throw new EmptyInfoException();
 		}
-		String insertStr = "INSERT INTO feature_set (owner_id, name, description, create_timestamp) "
-				+ "VALUES (?, ?, ?, CURRENT_TIMESTAMP)";
+		String insertStr = "INSERT INTO feature_set (owner_id, name, description,"
+				+ " supported_languages, " 
+				+ " create_timestamp) "
+				+ "VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)";
+
 		try {
 			PreparedStatement ps = dbConnection.prepareStatement(insertStr);
 			ps.setLong(1, userID);
 			ps.setString(2, featureSet.getName());
 			ps.setString(3, featureSet.getDescription());
+			ps.setArray(4, dbConnection.createArrayOf("text", featureSet.getSupportedLanguages().toArray())); 
 
 			ps.executeUpdate();
 
@@ -225,7 +233,7 @@ implements FeatureSelectorService {
 			ps.setLong(3, featureSet.getId());
 			ps.setLong(4, userID);
 			ps.executeUpdate();
-
+			
 		} catch (SQLException e) {
 			logger.warn("Error occured while updating feature set info... " + e.getMessage());
 			throw new DatabaseException(e.getMessage());
@@ -271,6 +279,7 @@ implements FeatureSelectorService {
 		return featureCount;
 	}
 
+	// TODO why is this method not in FeatureSetUtils?
 	@Override
 	public List<AnalysisEngine> getFeatureList(long featureSetID, int offset, int limit)
 			throws UserNotLoggedInException, AccessToResourceDeniedException, DatabaseException {
@@ -286,7 +295,8 @@ implements FeatureSelectorService {
 		}
 
 		//get data from database
-		String queryStr = "SELECT ae.id, ae.name, ae.version, ae.vendor, ae.description, ae.create_timestamp " 
+		String queryStr = "SELECT ae.id, ae.name, ae.version, ae.vendor, ae.description, ae.create_timestamp "
+				+ ", ae.supported_languages "	
 				+ "FROM analysis_engine AS ae, "
 				+ "     fs_cf, feature_set AS fs "
 				+ "WHERE ae.id = fs_cf.cf_id "
@@ -308,6 +318,7 @@ implements FeatureSelectorService {
 				AnalysisEngine ae = new AnalysisEngine();
 				ae.setId(rs.getLong("id"));
 				ae.setName(rs.getString("name"));
+				ae.setSupportedLanguages(Arrays.asList((String[])rs.getArray("supported_languages").getArray())); 
 				ae.setType(AEType.FEATURE_EXTRACTOR);
 				ae.setVersion(rs.getString("version"));
 				ae.setVendor(rs.getString("vendor"));
@@ -323,6 +334,131 @@ implements FeatureSelectorService {
 		logger.log(Level.TRACE, LogMarker.CTAP_SERVER_MARKER, 
 				new ServiceRequestCompletedMessage(serviceName));
 		return fsFeatureList;
+	}
+
+	// returns java list of languages supported by all features in feature set
+	public List<String> inferLanguagesSupportedByFS(long featureSetID) 
+throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedException {
+		String serviceName = "inferLanguagesSupportedByFS(featureSetID)";
+		long userID = logServiceStartAndGetUserID(serviceName); 
+
+		List<String> fsSupportedLanguages = new ArrayList<String>();
+
+		//check if user owner of the feature set
+		logger.trace(LogMarker.CTAP_SERVER_MARKER, "Checking if user owner of feature set...");
+		if(!isUserFSOwner(userID, featureSetID)) {
+			throw logger.throwing(new AccessToResourceDeniedException());
+		}
+
+		//get data from database
+		String queryStr = "SELECT ae.supported_languages "	
+				+ "FROM analysis_engine AS ae, "
+				+ "     fs_cf, feature_set AS fs "
+				+ "WHERE ae.id = fs_cf.cf_id "
+				+ "     AND fs.id = fs_cf.fs_id "
+				+ "     AND fs_cf.fs_id=? ";
+		PreparedStatement ps;
+		try {
+			ps = dbConnection.prepareStatement(queryStr);
+			ps.setLong(1, featureSetID);
+
+			ResultSet rs = ps.executeQuery();
+
+			// intersect the supported languages of all features included in this feature setto infer the supported language
+			// of the feature set itself
+			while(rs.next()) {
+				List<String> aeSupportedLanguages = Arrays.asList((String[])rs.getArray("supported_languages").getArray());
+				if (fsSupportedLanguages.isEmpty()) {
+					fsSupportedLanguages.addAll(aeSupportedLanguages);
+				} else {
+					fsSupportedLanguages.retainAll(aeSupportedLanguages);
+				}
+			}
+		} catch (SQLException e) {
+			throw logger.throwing(new DatabaseException(e.getMessage()));
+		}
+
+		logger.log(Level.TRACE, LogMarker.CTAP_SERVER_MARKER, 
+				new ServiceRequestCompletedMessage(serviceName));
+
+		return fsSupportedLanguages;
+	}
+
+	// updates the list of supported languages based on java featureSet object 
+	public Void updateSupportedLanguagesOfFeatureSet(FeatureSet featureSet)
+			throws EmptyInfoException, UserNotLoggedInException, 
+			AccessToResourceDeniedException, DatabaseException {
+		String serviceName = "updateSupportedLanguagesOfFeatureSet(featureSet)";
+		long userID = logServiceStartAndGetUserID(serviceName); 
+
+		//check if user owner of the feature set
+		if(!isUserFSOwner(userID, featureSet.getId())) {
+			throw new AccessToResourceDeniedException();
+		}
+
+		//check if info is empty
+		if(featureSet.getId() == 0 || featureSet.getName().isEmpty()) {
+			throw new EmptyInfoException();
+		}
+
+		PreparedStatement ps;
+
+		try {
+			//check passed, update corpus
+			String updateStr = ""
+					+ "UPDATE feature_set SET "
+					+ "supported_languages=? "
+					+ "WHERE id = ? AND owner_id = ? ";
+			ps = dbConnection.prepareStatement(updateStr);
+			ps.setArray(1, dbConnection.createArrayOf("text", featureSet.getSupportedLanguages().toArray()));
+			ps.setLong(2, featureSet.getId());
+			ps.setLong(3, userID);
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			logger.warn("Error occured while updating feature set info... " + e.getMessage());
+			throw new DatabaseException(e.getMessage());
+		}
+
+		logger.log(Level.TRACE, LogMarker.CTAP_SERVER_MARKER, 
+				new ServiceRequestCompletedMessage(serviceName));
+		return null;
+	}
+
+	// updates the list of supported languages based on information inferred from data base 
+	public Void updateSupportedLanguagesOfFeatureSet(long featureSetID) 
+			throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedException {
+		String serviceName = "updateSupportedLanguagesOfFeatureSet(featureSetID)";
+		long userID = logServiceStartAndGetUserID(serviceName); 
+
+		//check if user owner of the feature set
+		if(!isUserFSOwner(userID, featureSetID)) {
+			throw logger.throwing(new AccessToResourceDeniedException());
+		}
+
+		List<String> newSupportedLanguages = inferLanguagesSupportedByFS(featureSetID);
+
+		PreparedStatement ps;
+		try {
+			//check passed, update corpus
+			String updateStr = ""
+					+ "UPDATE feature_set SET "
+					+ "supported_languages=? "
+					+ "WHERE id = ? AND owner_id = ? ";
+			ps = dbConnection.prepareStatement(updateStr);
+			ps.setArray(1, dbConnection.createArrayOf("text", newSupportedLanguages.toArray())); 
+			ps.setLong(2, featureSetID);
+			ps.setLong(3, userID);
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			logger.warn("Error occured while updating feature set info... " + e.getMessage());
+			throw new DatabaseException(e.getMessage());
+		}
+		
+		logger.log(Level.TRACE, LogMarker.CTAP_SERVER_MARKER, 
+				new ServiceRequestCompletedMessage(serviceName));
+		return null;
 	}
 
 	@Override
@@ -350,6 +486,10 @@ implements FeatureSelectorService {
 
 		logger.log(Level.TRACE, LogMarker.CTAP_SERVER_MARKER, 
 				new ServiceRequestCompletedMessage(serviceName));
+
+		// update supported languages of feature set in DB
+		updateSupportedLanguagesOfFeatureSet(featureSetID); 
+
 		return null;
 	}
 
@@ -394,6 +534,7 @@ implements FeatureSelectorService {
 		//get data from database
 		String queryStr = ""
 				+ "SELECT id, name, version, vendor, description, create_timestamp " 
+				+ ", supported_languages "
 				+ "FROM analysis_engine "
 				+ "WHERE type = ?"
 				+ "ORDER BY id DESC "
@@ -412,6 +553,7 @@ implements FeatureSelectorService {
 				ae.setId(rs.getLong("id"));
 				ae.setName(rs.getString("name"));
 				ae.setType(AEType.FEATURE_EXTRACTOR);
+				ae.setSupportedLanguages(Arrays.asList((String[])rs.getArray("supported_languages").getArray()));
 				ae.setVersion(rs.getString("version"));
 				ae.setVendor(rs.getString("vendor"));
 				ae.setDescription(rs.getString("description"));
@@ -468,6 +610,10 @@ implements FeatureSelectorService {
 
 		logger.log(Level.TRACE, LogMarker.CTAP_SERVER_MARKER, 
 				new ServiceRequestCompletedMessage(serviceName));
+
+		// update supported languages of feature set in DB
+		updateSupportedLanguagesOfFeatureSet(featureSetID); 
+
 		return null;
 	}
 
@@ -511,7 +657,7 @@ implements FeatureSelectorService {
 			logger.warn("Database error: " + e.getMessage());
 			throw new DatabaseException(e.getMessage());
 		}
-
+		
 		logger.log(Level.TRACE, LogMarker.CTAP_SERVER_MARKER, 
 				new ServiceRequestCompletedMessage(serviceName));
 		return featureSetName;
@@ -538,6 +684,78 @@ implements FeatureSelectorService {
 		}
 
 		return isUserOwner;
+	}
+
+	@Override
+	public Boolean doesFeatureSetSupportLanguage(long featureSetID, String languageCode) throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedException {
+		boolean isSupported = false;
+		String serviceName = "doesFeatureSetSupportLanguage";
+		long userID = logServiceStartAndGetUserID(serviceName); 
+
+		//check if user owner of the feature set
+		if(!isUserFSOwner(userID, featureSetID)) {
+			throw new AccessToResourceDeniedException();
+		}
+		
+		//check if the feature set supports the requested language
+		logger.info("Getting supported languages from feature set for feature set id " + featureSetID + "...");
+		String queryStr =  "SELECT supported_languages FROM feature_set "
+				+ "WHERE id=?";
+		PreparedStatement ps;
+		try {
+			ps = dbConnection.prepareStatement(queryStr);
+			ps.setLong(1, featureSetID);
+			ResultSet rs = ps.executeQuery();
+			String languageCodeSmall = languageCode.toLowerCase();
+			while(rs.next()) {
+				if(Arrays.asList((String[])rs.getArray("supported_languages").getArray()).contains(languageCodeSmall)) {
+					isSupported = true;
+				} else {
+					isSupported = false;
+					break;  // should only be one match, but conceptually if there was multiple ones and one mismatch, we would stop
+				}
+			}
+		} catch (SQLException e) {
+			throw logger.throwing(new DatabaseException(e.getMessage()));
+		}		
+
+		logger.log(Level.TRACE, LogMarker.CTAP_SERVER_MARKER, 
+				new ServiceRequestCompletedMessage(serviceName));
+
+		return isSupported;
+	}
+
+	// TODO is this used?
+	public List<String> getLanguagesSupportedByFeatureSet(long featureSetID) throws DatabaseException, AccessToResourceDeniedException, UserNotLoggedInException {
+		List<String> supportedLanguages = new ArrayList<String>();
+		String serviceName = "getLanguagesSupportedByFeatureSet";
+		long userID = logServiceStartAndGetUserID(serviceName); 
+
+		//check if user owner of the feature set
+		if(!isUserFSOwner(userID, featureSetID)) {
+			throw new AccessToResourceDeniedException();
+		}
+		
+		//check if the feature set supports the requested language
+		logger.info("Getting supported languages from feature set for feature set id " + featureSetID + "...");
+		String queryStr =  "SELECT supported_languages FROM feature_set "
+				+ "WHERE id=?";
+		PreparedStatement ps;
+		try {
+			ps = dbConnection.prepareStatement(queryStr);
+			ps.setLong(1, featureSetID);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				supportedLanguages.addAll(Arrays.asList((String[])rs.getArray("supported_languages").getArray()));
+			}
+		} catch (SQLException e) {
+			throw logger.throwing(new DatabaseException(e.getMessage()));
+		}		
+
+		logger.log(Level.TRACE, LogMarker.CTAP_SERVER_MARKER, 
+				new ServiceRequestCompletedMessage(serviceName));
+
+		return supportedLanguages;
 	}
 
 	@Override
@@ -604,6 +822,7 @@ implements FeatureSelectorService {
 		//				+ "ORDER BY id DESC "
 		//				+ "LIMIT ? OFFSET ?";
 		String queryStr = "SELECT id, name, version, vendor, description, create_timestamp "
+				+ ", supported_languages "	
 				+ "FROM analysis_engine "
 				+ "WHERE name ILIKE ? AND type = ?"
 				+ "ORDER BY id DESC "
@@ -618,12 +837,13 @@ implements FeatureSelectorService {
 
 			ResultSet rs = ps.executeQuery();
 
-			// get infomation of all features included in this feature set
+			// get information of all features included in this feature set
 			while(rs.next()) {
 				AnalysisEngine ae = new AnalysisEngine();
 				ae.setId(rs.getLong("id"));
 				ae.setName(rs.getString("name"));
 				ae.setType(AEType.FEATURE_EXTRACTOR);
+				ae.setSupportedLanguages(Arrays.asList((String[])rs.getArray("supported_languages").getArray()));
 				ae.setVersion(rs.getString("version"));
 				ae.setVendor(rs.getString("vendor"));
 				ae.setDescription(rs.getString("description"));
@@ -695,6 +915,7 @@ implements FeatureSelectorService {
 
 		//get data from database
 		String queryStr = "SELECT ae.id, ae.name, ae.version, ae.vendor, ae.description, ae.create_timestamp " 
+				+ ", ae.supported_languages "	
 				+ "FROM analysis_engine AS ae, fs_cf "
 				+ "WHERE ae.id = fs_cf.cf_id "
 				+ "     AND fs_cf.fs_id=? "
@@ -716,12 +937,13 @@ implements FeatureSelectorService {
 
 			ResultSet rs = ps.executeQuery();
 
-			// get infomation of all features included in this feature set
+			// get information of all features included in this feature set
 			while(rs.next()) {
 				AnalysisEngine ae = new AnalysisEngine();
 				ae.setId(rs.getLong("id"));
 				ae.setName(rs.getString("name"));
 				ae.setType(AEType.FEATURE_EXTRACTOR);
+				ae.setSupportedLanguages(Arrays.asList((String[])rs.getArray("supported_languages").getArray())); 
 				ae.setVersion(rs.getString("version"));
 				ae.setVendor(rs.getString("vendor"));
 				ae.setDescription(rs.getString("description"));

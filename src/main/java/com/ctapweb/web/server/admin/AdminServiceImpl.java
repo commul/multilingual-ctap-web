@@ -61,12 +61,12 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 		createTextTable();
 
 		createAnalysisEngineTable();
-		
+
 		createAE_DependencyTable();
 
-//		createComplexityFeatureTable();
+		//		createComplexityFeatureTable();
 
-//		createCF_AETable();
+		//		createCF_AETable();
 
 		createFeatureSetTable();
 
@@ -242,6 +242,7 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 				+ "id BIGSERIAL PRIMARY KEY NOT NULL ,"
 				+ "name TEXT NOT NULL, "
 				+ "type TEXT NOT NULL, "
+				+ "supported_languages TEXT[], "
 				+ "version TEXT, "
 				+ "vendor TEXT, "
 				+ "description TEXT, "
@@ -260,37 +261,37 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 	}
 
 	private void createComplexityFeatureTable() throws DatabaseException {
-//		String createTableStr = ""
-//				+ "CREATE TABLE IF NOT EXISTS complexity_feature("
-//				+ "id BIGSERIAL PRIMARY KEY NOT NULL ,"
-//				+ "name TEXT NOT NULL,"
-//				+ "description TEXT, "
-//				+ "create_timestamp TIMESTAMP NOT NULL)"
-//				+ "";
-//		try (
-//				PreparedStatement ps = dbConnection.prepareStatement(createTableStr)
-//				){
-//			ps.execute();
-//		} catch (SQLException e) {
-//			throw new DatabaseException(e.getMessage());
-//		}	
+		//		String createTableStr = ""
+		//				+ "CREATE TABLE IF NOT EXISTS complexity_feature("
+		//				+ "id BIGSERIAL PRIMARY KEY NOT NULL ,"
+		//				+ "name TEXT NOT NULL,"
+		//				+ "description TEXT, "
+		//				+ "create_timestamp TIMESTAMP NOT NULL)"
+		//				+ "";
+		//		try (
+		//				PreparedStatement ps = dbConnection.prepareStatement(createTableStr)
+		//				){
+		//			ps.execute();
+		//		} catch (SQLException e) {
+		//			throw new DatabaseException(e.getMessage());
+		//		}	
 	}
 
 	private void createCF_AETable() throws DatabaseException {
-//		String createTableStr = ""
-//				+ "CREATE TABLE IF NOT EXISTS cf_ae("
-//				+ "id BIGSERIAL PRIMARY KEY NOT NULL ,"
-//				+ "cf_id BIGINT NOT NULL REFERENCES complexity_feature(id) ON DELETE CASCADE,"
-//				+ "ae_id BIGINT NOT NULL REFERENCES analysis_engine(id) ON DELETE RESTRICT"
-//				+ ")"
-//				+ "";
-//		try (
-//				PreparedStatement ps = dbConnection.prepareStatement(createTableStr)
-//				){
-//			ps.execute();
-//		} catch (SQLException e) {
-//			throw new DatabaseException(e.getMessage());
-//		}
+		//		String createTableStr = ""
+		//				+ "CREATE TABLE IF NOT EXISTS cf_ae("
+		//				+ "id BIGSERIAL PRIMARY KEY NOT NULL ,"
+		//				+ "cf_id BIGINT NOT NULL REFERENCES complexity_feature(id) ON DELETE CASCADE,"
+		//				+ "ae_id BIGINT NOT NULL REFERENCES analysis_engine(id) ON DELETE RESTRICT"
+		//				+ ")"
+		//				+ "";
+		//		try (
+		//				PreparedStatement ps = dbConnection.prepareStatement(createTableStr)
+		//				){
+		//			ps.execute();
+		//		} catch (SQLException e) {
+		//			throw new DatabaseException(e.getMessage());
+		//		}
 	}
 
 	private void createAE_DependencyTable() throws DatabaseException {
@@ -322,7 +323,7 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 		if(!isUserAdmin()) {
 			throw logger.throwing(new AdminNotLoggedInException());
 		}
-		
+
 		long aeCount = 0;
 
 		//query database
@@ -379,17 +380,19 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 			throw new EmptyInfoException();
 		}
 
-		logger.info("Updating AE info..."); 
+		logger.info("Updating AE info...");
 		String updateStr = ""
 				+ "UPDATE analysis_engine SET "
 				+ "name=?, description=?, descriptor_file_name =? "
+				+ "descriptor_file_content = ?"  // TODO DB check if this makes update better!
 				+ "WHERE id = ?"; 
 		try {
 			PreparedStatement ps = dbConnection.prepareStatement(updateStr);
 			ps.setString(1, ae.getName());
 			ps.setString(2, ae.getDescription());
 			ps.setString(3, ae.getDescriptorFileName());
-			ps.setLong(4, ae.getId());
+			ps.setString(4, ae.getDescriptorFileContent());  // TODO DB check if this makes update better!
+			ps.setLong(5, ae.getId());
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
@@ -429,42 +432,42 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 		return null;
 	}
 
-//	@Override
-//	public Void addAE(String userCookieValue, AnalysisEngine ae) 
-//			throws EmptyInfoException, UserNotLoggedInException, 
-//			AdminNotLoggedInException, DatabaseException {
-//
-//		//check if admin is logged in
-//		if(!isUserAdmin()) {
-//			throw new AdminNotLoggedInException();
-//		}
-//
-//		//check if ae info is empty
-//		if(ae.getName().isEmpty() || ae.getDescriptorFileName().isEmpty()) {
-//			throw new EmptyInfoException();
-//		}
-//
-//		logger.info("Adding new AE...");
-//
-//		String insertStr = "INSERT INTO "
-//				+ "analysis_engine (name, description, descriptor_file_name, create_timestamp) "
-//				+ "VALUES (?, ?, ?, CURRENT_TIMESTAMP)";
-//		try {
-//			PreparedStatement ps = dbConnection.prepareStatement(insertStr);
-//			ps.setString(1, ae.getName());
-//			ps.setString(2, ae.getDescription());
-//			ps.setString(3, ae.getDescriptorFileName());
-//
-//			ps.executeUpdate();
-//
-//		} catch (SQLException e) {
-//			logger.warn("DB error occured while adding new AE: " + e.getMessage());
-//			throw new DatabaseException(e.getMessage());
-//		}
-//
-//		logger.info("New AE added to DB.");
-//		return null;
-//	}
+	//	@Override
+	//	public Void addAE(String userCookieValue, AnalysisEngine ae) 
+	//			throws EmptyInfoException, UserNotLoggedInException, 
+	//			AdminNotLoggedInException, DatabaseException {
+	//
+	//		//check if admin is logged in
+	//		if(!isUserAdmin()) {
+	//			throw new AdminNotLoggedInException();
+	//		}
+	//
+	//		//check if ae info is empty
+	//		if(ae.getName().isEmpty() || ae.getDescriptorFileName().isEmpty()) {
+	//			throw new EmptyInfoException();
+	//		}
+	//
+	//		logger.info("Adding new AE...");
+	//
+	//		String insertStr = "INSERT INTO "
+	//				+ "analysis_engine (name, description, descriptor_file_name, create_timestamp) "
+	//				+ "VALUES (?, ?, ?, CURRENT_TIMESTAMP)";
+	//		try {
+	//			PreparedStatement ps = dbConnection.prepareStatement(insertStr);
+	//			ps.setString(1, ae.getName());
+	//			ps.setString(2, ae.getDescription());
+	//			ps.setString(3, ae.getDescriptorFileName());
+	//
+	//			ps.executeUpdate();
+	//
+	//		} catch (SQLException e) {
+	//			logger.warn("DB error occured while adding new AE: " + e.getMessage());
+	//			throw new DatabaseException(e.getMessage());
+	//		}
+	//
+	//		logger.info("New AE added to DB.");
+	//		return null;
+	//	}
 
 	@Override
 	public long getCFCount(String userCookieValue) 
@@ -714,6 +717,7 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 		return null;
 	}
 
+
 	private void createFeatureSetTable() throws DatabaseException {
 		String createTableStr = ""
 				+ "CREATE TABLE IF NOT EXISTS feature_set("
@@ -721,6 +725,7 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 				+ "owner_id BIGINT NOT NULL REFERENCES user_account(id) ON DELETE CASCADE,"
 				+ "name TEXT NOT NULL,"
 				+ "description TEXT,"
+				+ "supported_languages TEXT[], " 
 				+ "create_timestamp TIMESTAMP NOT NULL" + ");"
 				+ "";
 		try (
@@ -794,6 +799,7 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 				+ "tag_filter_logic VARCHAR(50),"
 				+ "tag_filter_keyword TEXT,"
 				+ "featureset_id BIGINT NOT NULL REFERENCES feature_set(id) ON DELETE CASCADE,"
+				+ "analysis_language TEXT,"
 				+ "create_timestamp TIMESTAMP NOT NULL" + ");"
 				+ "";
 		try (
@@ -891,7 +897,7 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 			throws UserNotLoggedInException, DatabaseException {
 		return isUserAdmin(getThreadLocalRequest());
 	}
-	
+
 	public boolean isUserAdmin(HttpServletRequest request)
 			throws UserNotLoggedInException, DatabaseException {
 		String serviceName = "isUserAdmin";
@@ -914,7 +920,7 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 				new ServiceRequestCompletedMessage(serviceName));
 		return isAdmin;
 	}
-	
+
 	@Override
 	public void importAE()
 			throws UserNotLoggedInException, AdminNotLoggedInException, 
@@ -926,7 +932,7 @@ public class AdminServiceImpl extends RemoteServiceServlet implements AdminServi
 		if(!isUserAdmin()) {
 			throw logger.throwing(new AdminNotLoggedInException());
 		}
-		
+
 		//import the AE descriptor files
 		try {
 			ImportAE importAE = new ImportAE();

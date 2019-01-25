@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -24,7 +25,8 @@ public class FeatureSetUtils {
 		List<AnalysisEngine> featureList = new ArrayList<>();
 
 		//get data from database
-		String queryStr = "SELECT ae.id, ae.name, ae.version, ae.vendor, ae.description, ae.create_timestamp " 
+		String queryStr = "SELECT ae.id, ae.name, ae.version, ae.vendor, ae.description, ae.create_timestamp "
+				+ ", ae.supported_languages " 
 				+ "FROM analysis_engine AS ae, "
 				+ "     fs_cf, feature_set AS fs "
 				+ "WHERE ae.id = fs_cf.cf_id "
@@ -35,17 +37,17 @@ public class FeatureSetUtils {
 
 		ResultSet rs = ps.executeQuery();
 
-		// get infomation of all features included in this feature set
+		// get information of all features included in this feature set
 		while(rs.next()) {
 			AnalysisEngine ae = new AnalysisEngine();
 			ae.setId(rs.getLong("id"));
 			ae.setName(rs.getString("name"));
 			ae.setType(AEType.FEATURE_EXTRACTOR);
+			ae.setSupportedLanguages(Arrays.asList((String[])rs.getArray("supported_languages").getArray()));
 			ae.setVersion(rs.getString("version"));
 			ae.setVendor(rs.getString("vendor"));
 			ae.setDescription(rs.getString("description"));
 			ae.setCreateDate(rs.getDate("create_timestamp"));
-
 			featureList.add(ae);
 		}
 		

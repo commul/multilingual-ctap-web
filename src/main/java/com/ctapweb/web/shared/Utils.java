@@ -1,6 +1,18 @@
 package com.ctapweb.web.shared;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
+
+import org.apache.logging.log4j.Level;
+
 import com.ctapweb.web.client.HistoryToken;
+import com.ctapweb.web.server.logging.LogMarker;
+import com.ctapweb.web.server.logging.ServiceRequestCompletedMessage;
+import com.ctapweb.web.shared.exception.AccessToResourceDeniedException;
+import com.ctapweb.web.shared.exception.DatabaseException;
+import com.ctapweb.web.shared.exception.UserNotLoggedInException;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 

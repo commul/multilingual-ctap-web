@@ -215,4 +215,15 @@ public interface FeatureSelectorService extends RemoteService {
 	String getFeatureSetName(long featureSetID)
 			throws UserNotLoggedInException, AccessToResourceDeniedException, DatabaseException;
 
+	/**
+	 * Determines if a given language code is supported by feature set
+	 * @param featureSetID
+	 * @param languageCode
+	 * @return
+	 * @throws DatabaseException
+	 * @throws UserNotLoggedInException 
+	 * @throws AccessToResourceDeniedException 
+	 */
+	Boolean doesFeatureSetSupportLanguage(long featureSetID, String languageCode) throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedException;
+
 }

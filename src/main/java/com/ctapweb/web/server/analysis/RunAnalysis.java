@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
@@ -52,13 +53,13 @@ public class RunAnalysis {
 	private String casConsumerDescriptorPath =
 			classLoader.getResource(ServerProperties.CPE_DESCRIPTOR_PATH_BASE).getFile() + 
 			"DatabaseWriterCasConsumer.xml";
- 
+
 	private String collectionReaderDescriptorPath = 
 			classLoader.getResource(ServerProperties.CPE_DESCRIPTOR_PATH_BASE).getFile() + 
 			"CorpusTextCollectionReader.xml";
 
-//	private String casConsumerDescriptorPath = 
-//			ServerProperties.CPE_DESCRIPTOR_PATH_BASE + "DatabaseWriterCasConsumer.xml";
+	//	private String casConsumerDescriptorPath = 
+	//			ServerProperties.CPE_DESCRIPTOR_PATH_BASE + "DatabaseWriterCasConsumer.xml";
 
 	//the cpe descriptor, components of the cpe are added to this descriptor
 	CollectionProcessingEngine cpe;
@@ -69,9 +70,9 @@ public class RunAnalysis {
 		logger.info(LogMarker.CTAP_SERVER_MARKER, "Initialing RunAnalysis object...");
 
 		long cpeInitStartTime = System.currentTimeMillis();//Start time of CPE initialization 
-		
+
 		this.analysis = analysis;
-		
+
 		//a cpe is a UIMA pipeline
 		logger.info("Producing a CPE for the analysis...");
 		cpe = UIMAFramework.produceCollectionProcessingEngine(createCPEDescription());
@@ -152,6 +153,16 @@ public class RunAnalysis {
 			//			FileUtils.forceMkdir(aeTempDir);
 			//			FileUtils.write(aeDescriptorFile, ae.getDescriptorFileContent());
 
+			if (!ae.getSupportedLanguages().contains(analysis.getLanguage().toLowerCase())) {
+				StringBuilder sb = new StringBuilder();
+				for (String l : ae.getSupportedLanguages()) {
+					sb.append(l);
+					sb.append(" ");
+				}
+				logger.info("Skipping AE " + ae.getName() + " because analysis language "+analysis.getLanguage()+" is not in set of supported ("+sb.toString().trim()+")...");
+				continue;
+			}
+
 			//looks for files from class path
 			File annotatorFolder = FileUtils.getFile(
 					classLoader.getResource(ServerProperties.ANNOTATOR_FOLDER).getFile());
@@ -180,6 +191,11 @@ public class RunAnalysis {
 					"aeID", Math.toIntExact(ae.getId())); 
 
 			casProcessor.setConfigurationParameterSettings(casProcessorParametersSettings);
+			// set the language parameter as configuration parameter for a given AE
+			// add parameter to all AE, even if it is not defined (will be ignored in this case)
+			casProcessorParametersSettings.setParameterValue("LanguageCode", analysis.getLanguage());
+			//logger.info("Setting Language Parameter for " + ae.getName() + " to " + analysis.getLanguage() + " ...");
+
 			cpeDescription.addCasProcessor(casProcessor);
 		}
 	}
