@@ -128,6 +128,7 @@
 									<g:ListBox styleName="form-control" ui:field="analysisLanguageOptionsListBox">
                                         <g:item value="EN">English</g:item>
                                         <g:item value="DE">German</g:item>
+                                        <g:item value="IT">Italian</g:item>
                                         <!-- new languages go here! e.g.: -->
                                         <!-- <g:item value="IT">Italian</g:item> -->
                                     </g:ListBox>

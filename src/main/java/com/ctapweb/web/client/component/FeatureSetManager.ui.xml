@@ -52,6 +52,9 @@
 														<g:Anchor ui:field="selectGerman">German</g:Anchor>
 													</li>
 													<li>
+														<g:Anchor ui:field="selectItalian">Italian</g:Anchor>
+													</li>
+													<li>
 														<g:Anchor ui:field="selectClear">Clear</g:Anchor>
 													</li>
 													<li>
@@ -141,6 +144,9 @@
 													</li>
 													<li>
 														<g:Anchor ui:field="selectGermanRightPanel">German</g:Anchor>
+													</li>
+													<li>
+														<g:Anchor ui:field="selectItalianRightPanel">Italian</g:Anchor>
 													</li>
 													<li>
 														<g:Anchor ui:field="selectClearRightPanel">Clear</g:Anchor>
