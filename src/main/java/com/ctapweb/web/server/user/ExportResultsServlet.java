@@ -6,7 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -76,8 +81,10 @@ public class ExportResultsServlet extends HttpServlet {
 			resp.setBufferSize(buffer.length);
 
 			if("long".equals(tableType)) {
+				logger.info("IS LONG");
 				getLongTable();
 			} else if ("wide".equals(tableType)) {
+				logger.info("IS WIDE");
 				getWideTable();
 			}
 
@@ -118,9 +125,80 @@ public class ExportResultsServlet extends HttpServlet {
 			respStream.print(rs.getDouble("value") + "\n");
 		} 
 	}
-
+	
+	//gets the results as a long table
+		private void getWideTable() throws SQLException, IOException {
+			String queryStr = ""
+					+ "SELECT text.id, text.title, result.feature_id, analysis_engine.name, result.value " 
+					+ "FROM result, text, analysis_engine " 
+					+ "WHERE result.text_id=text.id " 
+					+ "     AND result.feature_id=analysis_engine.id "
+					+ "     AND result.analysis_id=?";
+			PreparedStatement ps;
+			ps = dbConnection.prepareStatement(queryStr);
+			ps.setLong(1, analysisID);
+			ResultSet rs = ps.executeQuery();
+			
+			HashMap <Long, ArrayList<Object>> textIDPropsHash = new HashMap <Long, ArrayList<Object>> ();
+			ArrayList<String> featureNamesArray = new ArrayList<String>();
+			
+			respStream.print("Text_id\tTags\tText_Title");
+			// Fill the hashMap with information from the sql quiery
+			long textID;
+			Long longTextID;
+			ArrayList <Object> thisTextInfoArray;
+			Set<Long> firstTextIdSet = new HashSet();
+			while(rs.next()) {
+				
+				textID = rs.getLong("id");
+				longTextID = new Long (textID);
+				firstTextIdSet.add(longTextID);
+				
+				// Only add feature names once: for the first text (other texts have the same feature names)
+				if (firstTextIdSet.size()<2){
+					featureNamesArray.add(rs.getString("name"));
+				}
+				
+				if (!textIDPropsHash.containsKey(longTextID)){
+					String tagSetStr = "";
+					for(Tag tag: CorpusManagerServiceUtils.getTextTags(textID)) {
+						tagSetStr += "[" + tag.getName() + "] ";
+					}
+					thisTextInfoArray = new ArrayList();
+					thisTextInfoArray.add(tagSetStr);
+					thisTextInfoArray.add(rs.getString("title"));
+					thisTextInfoArray.add(rs.getDouble("value"));					
+					textIDPropsHash.put(longTextID, thisTextInfoArray);
+				}else{
+					thisTextInfoArray = textIDPropsHash.get(longTextID);
+					thisTextInfoArray.add(rs.getDouble("value"));
+				}
+			}
+			
+			//Print the names of the features to the caption
+			for(String featureName : featureNamesArray){
+	        	respStream.print("\t"+ featureName );
+	        }
+			//respStream.print("\n");
+			
+			//Print the content of the HashMap
+			Iterator it = textIDPropsHash.entrySet().iterator();
+		    while (it.hasNext()) {
+		        Map.Entry pair = (Map.Entry)it.next();
+		        longTextID = (Long)pair.getKey();
+		        thisTextInfoArray = (ArrayList<Object>)pair.getValue();
+		        respStream.print("\n"+ longTextID.toString() );
+		        for(Object entry : thisTextInfoArray){
+		        	respStream.print("\t"+ entry );
+		        }
+		    }
+			
+		}
+		
+		/*
 	//gets the results as a wide table
-	private void getWideTable() throws SQLException, IOException {
+	private void getWideTableOld() throws SQLException, IOException {
+		logger.info("in getWideTable");
 		//get feature names
 		List<String> featureNames = new ArrayList<>();
 
@@ -188,4 +266,5 @@ public class ExportResultsServlet extends HttpServlet {
 					featureValuesStr.substring(0, featureValuesStr.length() - 1) + "\n");
 		}
 	}
+	*/
 }

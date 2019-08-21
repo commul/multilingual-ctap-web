@@ -525,6 +525,8 @@ public class AnalysisGenerator extends Composite {
 					String url = GWT.getModuleBaseURL() + 
 							"exportResultsServlet?analysisID=" + analysis.getId() +
 							"&tableType=" + resultTableType.getSelectedValue();
+					logger.finer("URL in exportResults: " + url);
+					logger.finer("GWT.getModuleBaseURL(): " + GWT.getModuleBaseURL());
 					Window.open(url, "_self", "status=0, toolbar=0, menubar=0, location=0");
 				}
 			}
