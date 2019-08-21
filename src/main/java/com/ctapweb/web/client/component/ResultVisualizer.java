@@ -1,5 +1,6 @@
 package com.ctapweb.web.client.component;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -77,7 +78,7 @@ public class ResultVisualizer extends Composite {
 	// final Chart chart = new Chart();
 	//	Chart chart;
 
-	public ResultVisualizer() {
+	public ResultVisualizer(){	    
 		logger.finer("Opening Result Visualizer page...");
 		initWidget(uiBinder.createAndBindUi(this));
 
@@ -171,7 +172,7 @@ public class ResultVisualizer extends Composite {
 		//plot the first feature
 		Services.getResultVisualizerService().getPlotData(analysisID, featureID1, 
 				statisticsFunction1, new AsyncCallback<List<PlotData>>() {
-
+			
 			@Override
 			public void onFailure(Throwable caught) {
 				Utils.showErrorPage(caught.getMessage());

@@ -574,7 +574,8 @@ implements ResultVisualizerService {
 			if(!AnalysisUtils.isUserAnalysisOwner(userID, analysisID)) {
 				throw logger.throwing(new AccessToResourceDeniedException());
 			}
-
+			
+			/*
 			String queryStr = "SELECT tag.name, " + statistics + "(result.value) AS value "
 					+ "FROM result, text, ta_te, tag "
 					+ "WHERE result.text_id=text.id "
@@ -585,13 +586,22 @@ implements ResultVisualizerService {
 					+ "     AND tag.name ilike ? "
 					+ "GROUP BY tag.name, result.feature_id "
 					+ "ORDER BY name";
+			*/
+			
+			String queryStr = ""
+					+ "SELECT text.id, text.title, result.feature_id, analysis_engine.name, result.value " 
+					+ "FROM result, text, analysis_engine " 
+					+ "WHERE result.text_id=text.id " 
+					+ "     AND result.feature_id=analysis_engine.id "
+					+ "     AND result.analysis_id=?"
+					+ "     AND result.feature_id=?";
 
 			PreparedStatement ps = dbConnection.prepareStatement(queryStr);
 			ps.setLong(1, analysisID);
 			ps.setLong(2, featureID);
-			ps.setString(3, AnalysisUtils.getTagFilterString(analysisID));
+			//ps.setString(3, AnalysisUtils.getTagFilterString(analysisID));
 			ResultSet rs = ps.executeQuery();
-
+			
 			while(rs.next()) {
 				PlotData plotData = new PlotData();
 				plotData.setCategoryName(rs.getString("name"));

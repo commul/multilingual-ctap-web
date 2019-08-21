@@ -13,7 +13,7 @@
 	<set-property name="gwt.logging.simpleRemoteHandler"
 		value="ENABLED" />
 	<set-property name="gwt.logging.consoleHandler" value="DISABLED" />
-
+	<set-property name="gwt.logging.systemHandler" value="DISABLED" />
 	<inherits name="org.moxieapps.gwt.uploader.Uploader" />
 	<set-configuration-property name='xsiframe.failIfScriptTag'
 		value='FALSE' />
