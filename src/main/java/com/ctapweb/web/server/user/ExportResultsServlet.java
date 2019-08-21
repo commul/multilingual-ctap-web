@@ -81,10 +81,10 @@ public class ExportResultsServlet extends HttpServlet {
 			resp.setBufferSize(buffer.length);
 
 			if("long".equals(tableType)) {
-				logger.info("IS LONG");
+				//logger.info("IS LONG");
 				getLongTable();
 			} else if ("wide".equals(tableType)) {
-				logger.info("IS WIDE");
+				//logger.info("IS WIDE");
 				getWideTable();
 			}
 
