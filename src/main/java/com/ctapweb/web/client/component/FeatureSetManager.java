@@ -804,11 +804,19 @@ public class FeatureSetManager extends Composite {
 
 	@UiHandler("nRecords")
 	void onNRecordsClick(ClickEvent e) {
-		selectedFeatureCellTable.setVisibleRange(0, Integer.parseInt(nRecords.getSelectedValue()));
+		if (nRecords.getSelectedValue().equals("all")) {
+			selectedFeatureCellTable.setVisibleRange(0, selectedFeatureCellTable.getRowCount());
+		} else {
+			selectedFeatureCellTable.setVisibleRange(0, Integer.parseInt(nRecords.getSelectedValue()));		
+		}
 	}
 	@UiHandler("nRecordsRightPanel")
 	void onNRecordsRightPanelClick(ClickEvent e) {
-		availableFeatureCellTable.setVisibleRange(0, Integer.parseInt(nRecordsRightPanel.getSelectedValue()));
+		if (nRecordsRightPanel.getSelectedValue().equals("all")) {  
+			availableFeatureCellTable.setVisibleRange(0, availableFeatureCellTable.getRowCount());
+		} else {
+			availableFeatureCellTable.setVisibleRange(0, Integer.parseInt(nRecordsRightPanel.getSelectedValue()));
+		}
 	}
 
 	@UiHandler("selectAll")

@@ -90,6 +90,7 @@
 												<g:item value="40">40</g:item>
 												<g:item value="50">50</g:item>
 												<g:item value="100">100</g:item>
+												<g:item value="all">all</g:item>
 											</g:ListBox>
 											records per page
 
@@ -189,6 +190,7 @@
 												<g:item value="40">40</g:item>
 												<g:item value="50">50</g:item>
 												<g:item value="100">100</g:item>
+												<g:item value="all">all</g:item>
 											</g:ListBox>
 											records per page
 
