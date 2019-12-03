@@ -24,17 +24,8 @@
 								</div>
 								<div id="collapseOne" role="tabpanel" aria-labelledby="headingOne"
 									class="panel-collapse collapse in">
-									<div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod
-										high life accusamus terry richardson ad squid. 3 wolf moon
-										officia aute, non cupidatat skateboard dolor brunch. Food
-										truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
-										moon tempor, sunt aliqua put a bird on it squid single-origin
-										coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
-										helvetica, craft beer labore wes anderson cred nesciunt
-										sapiente ea proident. Ad vegan excepteur
-										butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw
-										denim aesthetic synth nesciunt you probably haven&apos;t heard
-										of them accusamus labore sustainable VHS.</div>
+									<div class="panel-body">CTAP measures linguistic complexity (or readability) of English, German, and Italian texts.<br/>
+It was developed in the Tübingen University Computational Linguistics department for the English language and then extended for German, also in Tübingen, and for Italian, at the Institute for Applied Linguistics in Eurac Research.</div>
 								</div>
 							</div>
 							<div class="panel panel-default">
@@ -47,17 +38,11 @@
 								</div>
 								<div id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo"
 									class="panel-collapse collapse">
-									<div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod
-										high life accusamus terry richardson ad squid. 3 wolf moon
-										officia aute, non cupidatat skateboard dolor brunch. Food
-										truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
-										moon tempor, sunt aliqua put a bird on it squid single-origin
-										coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
-										helvetica, craft beer labore wes anderson cred nesciunt
-										sapiente ea proident. Ad vegan excepteur
-										butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw
-										denim aesthetic synth nesciunt you probably haven&apos;t heard
-										of them accusamus labore sustainable VHS.</div>
+									<div class="panel-body">(1) Create a new corpus by clicking on the button <i>New Corpus</i>. You will have to give a name to the corpus you are creating. The description is optional. The corpus will be added to the List of Corpora.<br/>
+									(2) Now you can push the <i>Open</i> button and add files to the corpus. Click on the <i>Import</i> button and then on the <i>Add files</i> button. This will allow you to choose files from your file system. If you have few files to analyse, you can also drag and drop them in the <i>Drop files here</i> field.<br/>
+									 (3) Corpus files content. The files have to be in plain text format, containing texts in English, German or Italian that are longer than 51 characters. If a text it too short, it won’t be analysed by the tool.<br/>
+									 (4) Corpus files language. If a text is in several languages, the analysis result will be erroneous, because most natural language processing components on which CTAP depends are language specific and when performing an analysis you will have to choose only one language.<br/>
+									 (5) The files you have just added will appear in the <i>List of Texts</i>. By clicking the <i>Edit</i> button you may modify their text content.</div>
 								</div>
 							</div>
 							<div class="panel panel-default">
@@ -70,17 +55,11 @@
 								</div>
 								<div id="collapseThree" role="tabpanel" aria-labelledby="headingThree"
 									class="panel-collapse collapse">
-									<div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod
-										high life accusamus terry richardson ad squid. 3 wolf moon
-										officia aute, non cupidatat skateboard dolor brunch. Food
-										truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
-										moon tempor, sunt aliqua put a bird on it squid single-origin
-										coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
-										helvetica, craft beer labore wes anderson cred nesciunt
-										sapiente ea proident. Ad vegan excepteur
-										butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw
-										denim aesthetic synth nesciunt you probably haven&apos;t heard
-										of them accusamus labore sustainable VHS.</div>
+									<div class="panel-body">Now that you have a corpus to analyse, you need to select the complexity features that you want to apply to your texts.<br/>
+									In the menu on the left, click on <i>Feature Selector</i>, and then on <i>New Feature Set</i>. Give a name to your feature set. The description is optional. The feature set will appear in the <i>List of Feature Sets</i>. Click the <i>Open</i> button: on the right you will see a list of all the complexity features available in the tool.<br/>
+The complexity features available in the tool are now a little bit less than 400: around 270 for English, around 250 for German, around 200 for Italian. Some features are available in 3 languages, others in 2, others in 1. The numbers are impressive, but many features are variants of each other or just the same calculations are applied to different language elements (different parts of speech, for example).<br/>
+By default, you will only see the first 10 features of the list and will have to go to its bottom and click on the right arrow in order to see more and more features. But you can select the number of features that will be displayed at the same time from the drop down list: let us select 100. You will notice that features are listed in complete disorder: features for different languages, features belonging to different groups are all mixed.<br/>
+However, in order to analyse your corpus, you are only interested in features for 1 of the 3 available languages. Please, go to the <i>Select</i> menu and choose the language you need from the drop down list. The features corresponding to this language will be highlighted in blue. If you want to know what a specific feature is doing, click on the information button <i>I</i> in the <i>Details</i> column and read its description. Once you have decided what features to use, click on the <b>+</b> button in the Add column: the feature will be added to the <i>List of Features Selected</i> on the left side of the screen. By pushing the <i>Add Selected</i> button you will add all the selected features to your list.</div>
 								</div>
 							</div>
 							<div class="panel panel-default">
@@ -93,17 +72,14 @@
 								</div>
 								<div id="collapseFour" role="tabpanel" aria-labelledby="headingFour"
 									class="panel-collapse collapse">
-									<div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod
-										high life accusamus terry richardson ad squid. 3 wolf moon
-										officia aute, non cupidatat skateboard dolor brunch. Food
-										truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
-										moon tempor, sunt aliqua put a bird on it squid single-origin
-										coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
-										helvetica, craft beer labore wes anderson cred nesciunt
-										sapiente ea proident. Ad vegan excepteur
-										butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw
-										denim aesthetic synth nesciunt you probably haven&apos;t heard
-										of them accusamus labore sustainable VHS.</div>
+									<div class="panel-body">(1) Set up the analysis.<br/>
+									We have created the 2 elements that will allow us to construct an analysis: a corpus and a feature set. Now go to the <i>Analysis Generator</i> in the left side menu and click on <i>New Analysis</i>. A menu will appear on the right, where all the fields will be compulsory to fill, except the description.<br/>
+!!!!!!!!!!!!!!!!!<br/>
+Please pay attention to the language you are choosing, because the default language is English, and if you don’t change it to the language you really need, NLP tools for English will be applied and the results will be wrong.<br/>
+!!!!!!!!!!!!!!!!!<br/>
+In the Select a Corpus menu you should choose a corpus to analyse and in the Select a Feature Set menu you should select a feature set. The new analysis will be added to the List of Analysis on the left.<br/>
+(2) Run the analysis and download the results.<br/>
+Push on the arrow in order to run the analysis. A progress bar will appear on top. When the whole progress bar becomes blue, it means the analysis is complete and results can be downloaded. On the right side of the screen you can see a drop down menu that allows you to choose the form of the .CSV file that you will download. I invite you to try both the long and the wide formats in order to understand the difference between them and which one you prefer.</div>
 								</div>
 							</div>
 							<div class="panel panel-default">
@@ -116,17 +92,9 @@
 								</div>
 								<div id="collapseFive" role="tabpanel" aria-labelledby="headingFive"
 									class="panel-collapse collapse">
-									<div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod
-										high life accusamus terry richardson ad squid. 3 wolf moon
-										officia aute, non cupidatat skateboard dolor brunch. Food
-										truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
-										moon tempor, sunt aliqua put a bird on it squid single-origin
-										coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
-										helvetica, craft beer labore wes anderson cred nesciunt
-										sapiente ea proident. Ad vegan excepteur
-										butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw
-										denim aesthetic synth nesciunt you probably haven&apos;t heard
-										of them accusamus labore sustainable VHS.</div>
+									<div class="panel-body">Apart from downloading the results, you can visualise them as a graph.<br/>
+									Go to the <i>Result Visualizer</i> menu on the left. Select the analysis your are interested in from the drop down list under the <i>Select Analysis</i> title. Select the features you want to plot, the type of representation etc. Push the <i>Generate New Plot</i> button. A graphic will be generated on the right. You will be able to download the image in different formats by clicking on the 3 horizontal bars in its upper right corner.<br/>
+You can also download the analysis results in .CSV wide format by clicking on <i>Results</i>.</div>
 								</div>
 							</div>
 						</div>
