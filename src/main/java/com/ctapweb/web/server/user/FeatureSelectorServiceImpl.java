@@ -106,6 +106,7 @@ implements FeatureSelectorService {
 				+ "WHERE owner_id=? "
 				+ "ORDER BY id DESC "
 				+ "LIMIT ? OFFSET ?";
+
 		PreparedStatement ps;
 		try {
 			ps = dbConnection.prepareStatement(queryStr);
@@ -295,6 +296,7 @@ implements FeatureSelectorService {
 		}
 
 		//get data from database
+		/*
 		String queryStr = "SELECT ae.id, ae.name, ae.version, ae.vendor, ae.description, ae.create_timestamp "
 				+ ", ae.supported_languages "	
 				+ "FROM analysis_engine AS ae, "
@@ -303,6 +305,16 @@ implements FeatureSelectorService {
 				+ "     AND fs.id = fs_cf.fs_id "
 				+ "     AND fs_cf.fs_id=? "
 				+ "ORDER BY id DESC "
+				+ "LIMIT ? OFFSET ?";
+		*/
+		String queryStr = "SELECT ae.id, ae.name, ae.version, ae.vendor, ae.description, ae.create_timestamp "
+				+ ", ae.supported_languages "	
+				+ "FROM analysis_engine AS ae, "
+				+ "     fs_cf, feature_set AS fs "
+				+ "WHERE ae.id = fs_cf.cf_id "
+				+ "     AND fs.id = fs_cf.fs_id "
+				+ "     AND fs_cf.fs_id=? "
+				+ "ORDER BY ae.name "
 				+ "LIMIT ? OFFSET ?";
 		PreparedStatement ps;
 		try {
@@ -532,12 +544,21 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 		List<AnalysisEngine> availableFeatureList = new ArrayList<>(limit); 
 
 		//get data from database
+		/*
 		String queryStr = ""
 				+ "SELECT id, name, version, vendor, description, create_timestamp " 
 				+ ", supported_languages "
 				+ "FROM analysis_engine "
 				+ "WHERE type = ?"
 				+ "ORDER BY id DESC "
+				+ "LIMIT ? OFFSET ?";
+		*/
+		String queryStr = ""
+				+ "SELECT id, name, version, vendor, description, create_timestamp " 
+				+ ", supported_languages "
+				+ "FROM analysis_engine "
+				+ "WHERE type = ?"
+				+ "ORDER BY name "
 				+ "LIMIT ? OFFSET ?";
 		try {
 			PreparedStatement ps = dbConnection.prepareStatement(queryStr);
@@ -821,11 +842,19 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 		//				+ "     AND ae.name ILIKE '%sd%' "
 		//				+ "ORDER BY id DESC "
 		//				+ "LIMIT ? OFFSET ?";
+		/*
 		String queryStr = "SELECT id, name, version, vendor, description, create_timestamp "
 				+ ", supported_languages "	
 				+ "FROM analysis_engine "
 				+ "WHERE name ILIKE ? AND type = ?"
 				+ "ORDER BY id DESC "
+				+ "LIMIT ? OFFSET ?";
+		*/
+		String queryStr = "SELECT id, name, version, vendor, description, create_timestamp "
+				+ ", supported_languages "	
+				+ "FROM analysis_engine "
+				+ "WHERE name ILIKE ? AND type = ?"
+				+ "ORDER BY name "
 				+ "LIMIT ? OFFSET ?";
 		PreparedStatement ps;
 		try {
@@ -914,6 +943,7 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 		}
 
 		//get data from database
+		/*
 		String queryStr = "SELECT ae.id, ae.name, ae.version, ae.vendor, ae.description, ae.create_timestamp " 
 				+ ", ae.supported_languages "	
 				+ "FROM analysis_engine AS ae, fs_cf "
@@ -921,6 +951,15 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 				+ "     AND fs_cf.fs_id=? "
 				+ "     AND ae.name ILIKE ? "
 				+ "ORDER BY id DESC "
+				+ "LIMIT ? OFFSET ?";
+		*/
+		String queryStr = "SELECT ae.id, ae.name, ae.version, ae.vendor, ae.description, ae.create_timestamp " 
+				+ ", ae.supported_languages "	
+				+ "FROM analysis_engine AS ae, fs_cf "
+				+ "WHERE ae.id = fs_cf.cf_id "
+				+ "     AND fs_cf.fs_id=? "
+				+ "     AND ae.name ILIKE ? "
+				+ "ORDER BY ae.name "
 				+ "LIMIT ? OFFSET ?";
 		//		String queryStr = "SELECT id, name, version, vendor, description, create_timestamp "
 		//				+ "FROM analysis_engine "
