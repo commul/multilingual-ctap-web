@@ -29,12 +29,21 @@ public class AEUtils {
 		ArrayList<AnalysisEngine> aeList = new ArrayList<>(limit);
 
 		//get data from database;
+		/*
 		String queryStr = ""
 				+ "SELECT id, name, type, version, vendor, description, descriptor_file_name, "
 				+ "supported_languages, "
 				+ "descriptor_file_content, create_timestamp " 
 				+ "FROM analysis_engine "
 				+ "ORDER BY id DESC "
+				+ "LIMIT ? OFFSET ?";
+		*/
+		String queryStr = ""
+				+ "SELECT id, name, type, version, vendor, description, descriptor_file_name, "
+				+ "supported_languages, "
+				+ "descriptor_file_content, create_timestamp " 
+				+ "FROM analysis_engine "
+				+ "ORDER BY name "
 				+ "LIMIT ? OFFSET ?";
 		PreparedStatement ps;
 		ps = dbConnection.prepareStatement(queryStr);
