@@ -25,7 +25,10 @@
 								<div id="collapseOne" role="tabpanel" aria-labelledby="headingOne"
 									class="panel-collapse collapse in">
 									<div class="panel-body">CTAP measures linguistic complexity (or readability) of English, German, and Italian texts.<br/>
-It was developed in the Tübingen University Computational Linguistics department for the English language and then extended for German, also in Tübingen, and for Italian, at the Institute for Applied Linguistics in Eurac Research.</div>
+It was developed for English by Xiaobin Chen at the Tübingen University Computational Linguistics department and then extended for German by Zarah Weiss, also in Tübingen. After that it was extended for Italian by Nadezda Okinina at the Institute for Applied Linguistics in Eurac Research.<br/>
+								CTAP is an open source tool distributed under the BSD licence.<br/>
+								The code can be found on Github: https://github.com/commul/ctap
+								</div>
 								</div>
 							</div>
 							<div class="panel panel-default">
@@ -79,7 +82,10 @@ Please pay attention to the language you are choosing, because the default langu
 !!!!!!!!!!!!!!!!!<br/>
 In the Select a Corpus menu you should choose a corpus to analyse and in the Select a Feature Set menu you should select a feature set. The new analysis will be added to the List of Analysis on the left.<br/>
 (2) Run the analysis and download the results.<br/>
-Push on the arrow in order to run the analysis. A progress bar will appear on top. When the whole progress bar becomes blue, it means the analysis is complete and results can be downloaded. On the right side of the screen you can see a drop down menu that allows you to choose the form of the .CSV file that you will download. I invite you to try both the long and the wide formats in order to understand the difference between them and which one you prefer.</div>
+Push on the arrow in order to run the analysis. A progress bar will appear on top. When the whole progress bar becomes blue, it means the analysis is complete and results can be downloaded. On the right side of the screen you can see a drop down menu that allows you to choose the form of the .CSV file that you will download. I invite you to try both the long and the wide formats in order to understand the difference between them and which one you prefer.
+									<br/><br/><br/>
+									<img src="img/analysis-generator.png" width="1000" height="350" alt="Result Visualizer"	class="block-center img-rounded" />
+									</div>
 								</div>
 							</div>
 							<div class="panel panel-default">
@@ -87,14 +93,16 @@ Push on the arrow in order to run the analysis. A progress bar will appear on to
 									<h4 class="panel-title">
 										<a data-toggle="collapse" data-parent="#accordion" href="#collapseFive"
 											aria-expanded="false" aria-controls="collapseFive" class="collapsed">
-											How to use the visualize analysis results?</a>
+											How to use the Result Visualizer</a>
 									</h4>
 								</div>
 								<div id="collapseFive" role="tabpanel" aria-labelledby="headingFive"
 									class="panel-collapse collapse">
 									<div class="panel-body">Apart from downloading the results, you can visualise them as a graph.<br/>
 									Go to the <i>Result Visualizer</i> menu on the left. Select the analysis your are interested in from the drop down list under the <i>Select Analysis</i> title. Select the features you want to plot, the type of representation etc. Push the <i>Generate New Plot</i> button. A graphic will be generated on the right. You will be able to download the image in different formats by clicking on the 3 horizontal bars in its upper right corner.<br/>
-You can also download the analysis results in .CSV wide format by clicking on <i>Results</i>.</div>
+You can also download the analysis results in .CSV wide format by clicking on <i>Results</i>.<br/><br/><br/>
+								<img src="img/result-visualiser.png" width="1000" height="480" alt="Result Visualizer"	class="block-center img-rounded" />
+								</div>
 								</div>
 							</div>
 						</div>

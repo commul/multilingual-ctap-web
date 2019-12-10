@@ -12,8 +12,17 @@
 	<set-property name="gwt.logging.enabled" value="TRUE" />
 	<set-property name="gwt.logging.simpleRemoteHandler"
 		value="ENABLED" />
+	<!--<set-property name="gwt.logging.simpleRemoteHandler"
+		value="DISABLED" />-->
 	<set-property name="gwt.logging.consoleHandler" value="DISABLED" />
 	<set-property name="gwt.logging.systemHandler" value="DISABLED" />
+	<!-- <set-property name="gwt.logging.consoleHandler" value="ENABLED" />
+	<set-property name="gwt.logging.systemHandler" value="ENABLED" />-->
+	<!-- <set-property name="gwt.FirebugLogHandler" value="ENABLED" />
+	<set-property name="gwt.DevelopmentModeLogHandler" value="ENABLED" />
+	<set-property name="gwt.logging.PopupLogHandler" value="ENABLED" />-->
+	
+	
 	<inherits name="org.moxieapps.gwt.uploader.Uploader" />
 	<set-configuration-property name='xsiframe.failIfScriptTag'
 		value='FALSE' />
