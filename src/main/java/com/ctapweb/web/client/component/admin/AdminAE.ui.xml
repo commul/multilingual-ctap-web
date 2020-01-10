@@ -238,7 +238,7 @@
 
 								<div class="form-group">
 									<p>Description</p>
-									<g:TextArea height="100px" styleName="form-control"
+									<g:TextArea height="500px" styleName="form-control"
 										ui:field="aeDescription" enabled="false" />
 								</div>
 								<div class="form-group">

@@ -242,12 +242,9 @@
 								</div>
 								<div class="form-group">
 									<p>
-										Desc
-										<!-- <g:Button ui:field="saveAEDetail" styleName="btn btn-sm btn-primary" -->
-										<!-- text="Save" /> -->
-										ription
+										Description
 									</p>
-									<g:TextArea height="100px" styleName="form-control"
+									<g:TextArea height="500px" styleName="form-control"
 										ui:field="aeDescription" enabled="false" />
 								</div>
 								<g:Button ui:field="closeAEDetail"
