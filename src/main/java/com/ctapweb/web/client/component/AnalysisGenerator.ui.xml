@@ -121,6 +121,7 @@
 									<g:TextArea height="200px" styleName="form-control"
 										ui:field="analysisDescription" />
 								</div>
+<<<<<<< HEAD
 								<!-- by zweiss -->
 								<div class="form-group">
 									<p>Language</p>
@@ -133,6 +134,8 @@
                                         <!-- <g:item value="IT">Italian</g:item> -->
                                     </g:ListBox>
 								</div>
+=======
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 
 
 								<div class="form-inline form-group">

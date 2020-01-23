@@ -574,8 +574,12 @@ implements ResultVisualizerService {
 			if(!AnalysisUtils.isUserAnalysisOwner(userID, analysisID)) {
 				throw logger.throwing(new AccessToResourceDeniedException());
 			}
+<<<<<<< HEAD
 			
 			/*
+=======
+
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 			String queryStr = "SELECT tag.name, " + statistics + "(result.value) AS value "
 					+ "FROM result, text, ta_te, tag "
 					+ "WHERE result.text_id=text.id "
@@ -586,6 +590,7 @@ implements ResultVisualizerService {
 					+ "     AND tag.name ilike ? "
 					+ "GROUP BY tag.name, result.feature_id "
 					+ "ORDER BY name";
+<<<<<<< HEAD
 			*/
 			
 			String queryStr = ""
@@ -595,13 +600,21 @@ implements ResultVisualizerService {
 					+ "     AND result.feature_id=analysis_engine.id "
 					+ "     AND result.analysis_id=?"
 					+ "     AND result.feature_id=?";
+=======
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 
 			PreparedStatement ps = dbConnection.prepareStatement(queryStr);
 			ps.setLong(1, analysisID);
 			ps.setLong(2, featureID);
+<<<<<<< HEAD
 			//ps.setString(3, AnalysisUtils.getTagFilterString(analysisID));
 			ResultSet rs = ps.executeQuery();
 			
+=======
+			ps.setString(3, AnalysisUtils.getTagFilterString(analysisID));
+			ResultSet rs = ps.executeQuery();
+
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 			while(rs.next()) {
 				PlotData plotData = new PlotData();
 				plotData.setCategoryName(rs.getString("name"));
@@ -664,9 +677,13 @@ implements ResultVisualizerService {
 		
 		try {
 			String queryStr = "SELECT DISTINCT a.id, a.owner_id, a.name, a.description, a.corpus_id,"
+<<<<<<< HEAD
 					+ "a.tag_filter_logic, a.tag_filter_keyword, a.featureset_id, "
 					+ "a.analysis_language, "
 					+ "a.create_timestamp "
+=======
+					+ "a.tag_filter_logic, a.tag_filter_keyword, a.featureset_id, a.create_timestamp "
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 					+ "FROM result, analysis AS a "
 					+ "WHERE result.analysis_id=a.id "
 					+ "     AND a.owner_id=?";
@@ -684,7 +701,11 @@ implements ResultVisualizerService {
 				analysis.setTagKeyword(rs.getString("tag_filter_keyword"));
 				analysis.setFeatureSetID(rs.getLong("featureset_id"));
 				analysis.setCreateDate(rs.getDate("create_timestamp"));
+<<<<<<< HEAD
 				analysis.setLanguage(rs.getString("analysis_language"));
+=======
+
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 				analysisList.add(analysis);
 			}
 		} catch (SQLException e) {

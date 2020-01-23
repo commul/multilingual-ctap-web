@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Arrays;
+=======
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -51,7 +54,11 @@ public class AnalysisUtils {
 
 		return isUserOwner;
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	/**
 	 * gets an analysis by ID. If it doesn't exist, returns null.
 	 * @param analysisID
@@ -62,13 +69,20 @@ public class AnalysisUtils {
 		Analysis analysis = new Analysis();
 
 		//get data from database
+<<<<<<< HEAD
 		String queryStr = "" 
+=======
+		String queryStr = ""
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 				+ "SELECT analysis.id, analysis.owner_id, analysis.name, "
 				+ "analysis.description, "
 				+ "analysis.corpus_id, corpus.name AS corpus_name, "
 				+ "analysis.tag_filter_logic, analysis.tag_filter_keyword, "
 				+ "analysis.featureset_id, feature_set.name AS featureset_name, "
+<<<<<<< HEAD
 				+ "analysis.analysis_language, "
+=======
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 				+ "analysis.create_timestamp "
 				+ "FROM analysis "
 				+ "JOIN corpus ON (analysis.corpus_id=corpus.id) "
@@ -80,7 +94,11 @@ public class AnalysisUtils {
 
 		ResultSet rs = ps.executeQuery();
 
+<<<<<<< HEAD
 		// get information of analysis 
+=======
+		// get infomation of analysis 
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		if(rs.next()) {
 			analysis.setId(rs.getLong("id"));
 			analysis.setOwner_id(rs.getLong("owner_id"));
@@ -93,7 +111,10 @@ public class AnalysisUtils {
 			analysis.setCreateDate(rs.getDate("create_timestamp"));
 			analysis.setFeatureSetID(rs.getLong("featureset_id"));
 			analysis.setFeatureSetName(rs.getString("featureset_name"));
+<<<<<<< HEAD
 			analysis.setLanguage(rs.getString("analysis_language"));
+=======
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		}
 
 		return analysis;
@@ -268,7 +289,11 @@ public class AnalysisUtils {
 	//construct an AE list to be added as cas processors
 	//Logic: each feature is obtained by running a series of AEs. Multiple features may use the same AEs.
 	//As a result, we need to make sure that the same AE is added to the CPE only once. 
+<<<<<<< HEAD
 	//We also need to guarantee the order in which the AEs are run for each feature. 
+=======
+	//We also need to garantee the order in which the AEs are run for each feature. 
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	//As a result, the AE list is constructed by inserting subsequent AE dependencies into the first AE dependency.
 	//Then repeated AEs are deleted. 
 	public static List<AnalysisEngine> getCleanAEs(long analysisID) throws SQLException {
@@ -306,12 +331,19 @@ public class AnalysisUtils {
 		//get data from database;
 		String queryStr = "SELECT ae.id, ae.name, ae.type, ae.version,"
 				+ "ae.vendor, ae.description, ae.descriptor_file_name, "
+<<<<<<< HEAD
 				+ "ae.supported_languages, "
+=======
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 				+ "ae.descriptor_file_content, ae.create_timestamp "
 				+ "FROM analysis, fs_cf, analysis_engine as ae "
 				+ "WHERE analysis.featureset_id=fs_cf.fs_id "
 				+ "     AND fs_cf.cf_id=ae.id "
+<<<<<<< HEAD
 				+ "     AND analysis.id = ? "; 
+=======
+				+ "     AND analysis.id = ? ";
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 
 		PreparedStatement ps;
 		ps = dbConnection.prepareStatement(queryStr);
@@ -319,23 +351,37 @@ public class AnalysisUtils {
 
 		ResultSet rs = ps.executeQuery();
 
+<<<<<<< HEAD
 		// get information of all AEs 
+=======
+		// get infomation of all AEs 
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		while(rs.next()) {
 			AnalysisEngine ae = new AnalysisEngine();
 			ae.setId(rs.getLong("id"));
 			ae.setName(rs.getString("name"));
 			ae.setType(rs.getString("type"));
+<<<<<<< HEAD
 			ae.setSupportedLanguages(Arrays.asList((String[])rs.getArray("supported_languages").getArray()));
+=======
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 			ae.setVersion(rs.getString("version"));
 			ae.setVendor(rs.getString("vendor"));
 			ae.setDescription(rs.getString("description"));
 			ae.setDescriptorFileName(rs.getString("descriptor_file_name"));
 			ae.setDescriptorFileContent(rs.getString("descriptor_file_content"));
 			ae.setCreateDate(rs.getDate("create_timestamp"));
+<<<<<<< HEAD
 			
 			//get AE dependency
 			List<AnalysisEngine> dependencyList = AEUtils.getAEDependency(ae.getId());
 			dependencyList.add(ae); //adding the current AE, which is required to get the analysis result
+=======
+
+			//get AE dependency
+			List<AnalysisEngine> dependencyList = AEUtils.getAEDependency(ae.getId());
+			dependencyList.add(ae); //adding the current AE, which is reuqired to get the analysis result
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 			ae.setAeDependency(dependencyList);
 
 			aeList.add(ae);

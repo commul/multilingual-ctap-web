@@ -1,5 +1,6 @@
 package com.ctapweb.web.shared;
 
+<<<<<<< HEAD
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +14,9 @@ import com.ctapweb.web.server.logging.ServiceRequestCompletedMessage;
 import com.ctapweb.web.shared.exception.AccessToResourceDeniedException;
 import com.ctapweb.web.shared.exception.DatabaseException;
 import com.ctapweb.web.shared.exception.UserNotLoggedInException;
+=======
+import com.ctapweb.web.client.HistoryToken;
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 

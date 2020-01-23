@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+=======
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<!-- POM file generated with GWT webAppCreator -->
@@ -90,17 +94,24 @@
 			<groupId>org.moxieapps.gwt</groupId>
 			<artifactId>uploader</artifactId>
 			<version>1.1.0</version>
+<<<<<<< HEAD
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/org.moxieapps.gwt.uploader-1.1.0.jar</systemPath>
+=======
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		</dependency>
 		<dependency>
 			<groupId>org.moxieapps.gwt</groupId>
 			<artifactId>highcharts</artifactId>
 			<version>1.7.0</version>
+<<<<<<< HEAD
             <scope>system</scope>
             <systemPath>${basedir}/lib/org.moxieapps.gwt.highcharts-1.7.0.jar</systemPath>
 		</dependency>
 
+=======
+		</dependency>
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -117,6 +128,7 @@
 			<artifactId>uimaj-cpe</artifactId>
 			<version>2.8.1</version>
 		</dependency>
+<<<<<<< HEAD
 		<!-- https://mvnrepository.com/artifact/org.apache.uima/uimafit-core -->
 		<dependency>
     		<groupId>org.apache.uima</groupId>
@@ -128,6 +140,12 @@
 			<artifactId>commons-fileupload</artifactId>
 			<!-- <version>1.3.2</version>  -->
 			<version>1.3.3</version> <!--  upgrade recommended for security  -->
+=======
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.2</version>
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -163,6 +181,7 @@
 	</dependencies>
 
 	<build>
+<<<<<<< HEAD
 		<resources>
 			<resource>
 				<directory>../ctap-feature/src/main/resources/</directory>
@@ -175,6 +194,20 @@
 				</includes>
 			</resource>
 		</resources>
+=======
+	    <resources>
+	      <resource>
+		<directory>../ctap-feature/src/main/resources/</directory>
+	      </resource>
+	      <resource>
+ 	        <directory>src/main/java</directory>
+	        <includes>
+	           <include>com/ctapweb/web/client/component/**/*.xml</include>
+	           <include>com/ctapweb/web/server/analysis/descriptor/*.xml</include>
+	        </includes>
+	      </resource>
+	    </resources>
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		<plugins>
 
 			<!-- GWT Maven Plugin -->

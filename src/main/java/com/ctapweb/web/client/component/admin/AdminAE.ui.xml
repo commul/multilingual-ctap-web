@@ -164,7 +164,10 @@
 										<g:item value="40">40</g:item>
 										<g:item value="50">50</g:item>
 										<g:item value="100">100</g:item>
+<<<<<<< HEAD
 										<g:item value="all">all</g:item>
+=======
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 									</g:ListBox>
 									records per page
 								</p>
@@ -238,7 +241,11 @@
 
 								<div class="form-group">
 									<p>Description</p>
+<<<<<<< HEAD
 									<g:TextArea height="500px" styleName="form-control"
+=======
+									<g:TextArea height="100px" styleName="form-control"
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 										ui:field="aeDescription" enabled="false" />
 								</div>
 								<div class="form-group">

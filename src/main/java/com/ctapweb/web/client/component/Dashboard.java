@@ -394,6 +394,7 @@ public class Dashboard extends Composite {
 		analysisList.addColumn(featureSetColumn, "Feature Set");
 		//				analysisList.setColumnWidth(featureSetColumn, "20%");
 
+<<<<<<< HEAD
 		// the analysis language column
 		TextColumn<Analysis> analysisLanguageColumn = new TextColumn<Analysis>() {
 			@Override
@@ -404,6 +405,8 @@ public class Dashboard extends Composite {
 		analysisList.addColumn(analysisLanguageColumn, "Language");
 		analysisList.setColumnWidth(analysisLanguageColumn, "3%");
 		
+=======
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		//the created date column
 		TextColumn<Analysis> createdColumn = new TextColumn<Analysis>() {
 			@Override

@@ -1,6 +1,9 @@
 package com.ctapweb.web.client.component;
 
+<<<<<<< HEAD
 import java.io.IOException;
+=======
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -78,7 +81,11 @@ public class ResultVisualizer extends Composite {
 	// final Chart chart = new Chart();
 	//	Chart chart;
 
+<<<<<<< HEAD
 	public ResultVisualizer(){	    
+=======
+	public ResultVisualizer() {
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		logger.finer("Opening Result Visualizer page...");
 		initWidget(uiBinder.createAndBindUi(this));
 
@@ -172,7 +179,11 @@ public class ResultVisualizer extends Composite {
 		//plot the first feature
 		Services.getResultVisualizerService().getPlotData(analysisID, featureID1, 
 				statisticsFunction1, new AsyncCallback<List<PlotData>>() {
+<<<<<<< HEAD
 			
+=======
+
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 			@Override
 			public void onFailure(Throwable caught) {
 				Utils.showErrorPage(caught.getMessage());

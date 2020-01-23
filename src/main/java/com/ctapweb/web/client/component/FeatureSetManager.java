@@ -86,6 +86,7 @@ public class FeatureSetManager extends Composite {
 	@UiField Anchor selectAll;
 	@UiField Anchor selectClear;
 	@UiField Anchor selectReverse;
+<<<<<<< HEAD
 
 	@UiField Anchor selectEnglishRightPanel;
 	@UiField Anchor selectEnglish;
@@ -93,6 +94,8 @@ public class FeatureSetManager extends Composite {
 	@UiField Anchor selectGerman;
 	// add new language here
 	
+=======
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	@UiField Button deleteSelected;
 	@UiField Button addSelected;
 	@UiField Button showAll;
@@ -215,6 +218,10 @@ public class FeatureSetManager extends Composite {
 		availableFeatureCellTablePanel.add(pagerAvailableFeatureCellTable);
 	}
 
+<<<<<<< HEAD
+=======
+	
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	//Shows all the available features whose name contains the keyword.
 	private void showAvailableFeatures(final String keyword) {
 		availableFeatureCellTable = new CellTable<AnalysisEngine>(AnalysisEngine.KEY_PROVIDER);
@@ -453,6 +460,7 @@ public class FeatureSetManager extends Composite {
 		selectAllRightPanel.getElement().getStyle().setCursor(Cursor.POINTER);
 		selectClearRightPanel.getElement().getStyle().setCursor(Cursor.POINTER);
 		selectReverseRightPanel.getElement().getStyle().setCursor(Cursor.POINTER);
+<<<<<<< HEAD
 		// add new language here
 		showAll.setHTML(ICONBUTTONTEMPLATE.labeledButton("fa-filter", "Show All"));
 		showAllRightPanel.setHTML(ICONBUTTONTEMPLATE.labeledButton("fa-filter", "Show All"));
@@ -461,6 +469,10 @@ public class FeatureSetManager extends Composite {
 		selectEnglishRightPanel.getElement().getStyle().setCursor(Cursor.POINTER);
 		selectGermanRightPanel.getElement().getStyle().setCursor(Cursor.POINTER);
 		// add new language here
+=======
+		showAll.setHTML(ICONBUTTONTEMPLATE.labeledButton("fa-filter", "Show All"));
+		showAllRightPanel.setHTML(ICONBUTTONTEMPLATE.labeledButton("fa-filter", "Show All"));
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	}
 	
 	private void setFeatureSetName() {
@@ -506,7 +518,11 @@ public class FeatureSetManager extends Composite {
 		selectedFeatureCellTable.addColumn(idColumn, "ID");
 		selectedFeatureCellTable.setColumnWidth(idColumn, "3%");
 
+<<<<<<< HEAD
 		// the name column
+=======
+		//the name column
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		TextColumn<AnalysisEngine> titleColumn = new TextColumn<AnalysisEngine>() {
 			@Override
 			public String getValue(AnalysisEngine ae) {
@@ -515,6 +531,7 @@ public class FeatureSetManager extends Composite {
 		};
 		selectedFeatureCellTable.addColumn(titleColumn, "Feature Name");
 
+<<<<<<< HEAD
 		//the supported languages column
 		TextColumn<AnalysisEngine> supportedLanguagesColumn = new TextColumn<AnalysisEngine>() {
 			@Override
@@ -525,6 +542,9 @@ public class FeatureSetManager extends Composite {
 		selectedFeatureCellTable.addColumn(supportedLanguagesColumn, "Languages");
 
 		//the details button column
+=======
+		//the detials button column
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		SafeHtml detailsIcon =
 				ICONBUTTONTEMPLATE.iconButtonInCellTable("fa-info-circle");
 		ActionCell<AnalysisEngine> detailsCell = new ActionCell<>(detailsIcon, 
@@ -608,6 +628,7 @@ public class FeatureSetManager extends Composite {
 		};
 		availableFeatureCellTable.addColumn(titleColumn, "Feature Name");
 
+<<<<<<< HEAD
 		// the supported languages column  
 		TextColumn<AnalysisEngine> supportedLanguagesColumn = new TextColumn<AnalysisEngine>() {
 			@Override
@@ -617,6 +638,8 @@ public class FeatureSetManager extends Composite {
 		};
 		availableFeatureCellTable.addColumn(supportedLanguagesColumn, "Languages");
 
+=======
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		//the detials button column
 		SafeHtml detailsIcon =
 				ICONBUTTONTEMPLATE.iconButtonInCellTable("fa-info-circle");
@@ -804,6 +827,7 @@ public class FeatureSetManager extends Composite {
 
 	@UiHandler("nRecords")
 	void onNRecordsClick(ClickEvent e) {
+<<<<<<< HEAD
 		if (nRecords.getSelectedValue().equals("all")) {
 			selectedFeatureCellTable.setVisibleRange(0, selectedFeatureCellTable.getRowCount());
 		} else {
@@ -817,6 +841,13 @@ public class FeatureSetManager extends Composite {
 		} else {
 			availableFeatureCellTable.setVisibleRange(0, Integer.parseInt(nRecordsRightPanel.getSelectedValue()));
 		}
+=======
+		selectedFeatureCellTable.setVisibleRange(0, Integer.parseInt(nRecords.getSelectedValue()));
+	}
+	@UiHandler("nRecordsRightPanel")
+	void onNRecordsRightPanelClick(ClickEvent e) {
+		availableFeatureCellTable.setVisibleRange(0, Integer.parseInt(nRecordsRightPanel.getSelectedValue()));
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	}
 
 	@UiHandler("selectAll")
@@ -834,6 +865,10 @@ public class FeatureSetManager extends Composite {
 		}
 	}
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	@UiHandler("selectClear")
 	void onSelectClearClick(ClickEvent e) {
 		clearFeedbackPanels();
@@ -863,6 +898,7 @@ public class FeatureSetManager extends Composite {
 		}
 	}
 
+<<<<<<< HEAD
 	@UiHandler("selectEnglish")
 	void onSelectEnglishClick(ClickEvent e) {
 		for(AnalysisEngine complexityFeature : selectedFeatureCellTable.getVisibleItems()) {
@@ -909,6 +945,8 @@ public class FeatureSetManager extends Composite {
 	}
 	// add new language here
 
+=======
+>>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	@UiHandler("closeFeedbackPanel")
 	void onCloseFeedbackPanelClick(ClickEvent e) {
 		feedbackPanel.setVisible(false);
