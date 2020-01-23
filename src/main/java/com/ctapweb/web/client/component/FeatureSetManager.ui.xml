@@ -16,12 +16,8 @@
 
 
 				<div class="row">
-<<<<<<< HEAD
 					<g:HTMLPanel ui:field="featureListsWrapper"
 						styleName="col-lg-12">
-=======
-					<g:HTMLPanel ui:field="featureListsWrapper" styleName="col-lg-12">
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 						<!--selected feature list panel -->
 						<g:HTMLPanel ui:field="selectedFeatureListPanel"
 							styleName="col-lg-6">
@@ -50,7 +46,6 @@
 														<g:Anchor ui:field="selectAll">All</g:Anchor>
 													</li>
 													<li>
-<<<<<<< HEAD
 														<g:Anchor ui:field="selectEnglish">English</g:Anchor>
 													</li>
 													<li>
@@ -60,14 +55,11 @@
 														<g:Anchor ui:field="selectItalian">Italian</g:Anchor>
 													</li>
 													<li>
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 														<g:Anchor ui:field="selectClear">Clear</g:Anchor>
 													</li>
 													<li>
 														<g:Anchor ui:field="selectReverse">Reverse</g:Anchor>
 													</li>
-<<<<<<< HEAD
 													<!-- add new language here -->
 												</ul>
 											</div>
@@ -83,26 +75,10 @@
 										<g:InlineLabel ui:field="feedbackLabel">feedback</g:InlineLabel>
 										<g:Button ui:field="closeFeedbackPanel"
 											styleName="close" text="X" />
-=======
-
-												</ul>
-											</div>
-										<g:Button styleName="btn mb-sm btn-success btn-labeled"
-											ui:field="showAll">Show All</g:Button>
-										</div>
-									</div>
-									<g:HTMLPanel ui:field="feedbackPanel" styleName="alert"
-										visible="false">
-										<em class="fa fa-exclamation-circle fa-lg fa-fw"></em>
-										<g:InlineLabel ui:field="feedbackLabel">feedback</g:InlineLabel>
-										<g:Button ui:field="closeFeedbackPanel" styleName="close"
-											text="X" />
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 									</g:HTMLPanel>
 
 									<p class="lead">List of Features Selected</p>
 									<p>
-<<<<<<< HEAD
 
 										<form class="form-inline">
 
@@ -130,31 +106,6 @@
 									</p>
 									<g:HTMLPanel
 										ui:field="selectedFeatureCellTablePanel" />
-=======
-									
-																	<form class="form-inline">
-
-										Show
-										<g:ListBox ui:field="nRecords" width="80px">
-											<g:item value="10">10</g:item>
-											<g:item value="20">20</g:item>
-											<g:item value="30">30</g:item>
-											<g:item value="40">40</g:item>
-											<g:item value="50">50</g:item>
-											<g:item value="100">100</g:item>
-										</g:ListBox>
-										records per page
-
-											<div class="form-group has-feedback pull-right">
-												<g:TextBox ui:field="search" styleName="form-control form-control-rounded input-sm" />
-												<span class="fa fa-search form-control-feedback text-muted"></span>
-											</div>
-										</form>
-									
-										
-									</p>
-									<g:HTMLPanel ui:field="selectedFeatureCellTablePanel" />
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 								</div>
 							</div>
 
@@ -175,10 +126,7 @@
 											<g:Button ui:field="addSelected"
 												styleName="btn mb-sm btn-primary 
 										btn-labeled" />
-<<<<<<< HEAD
 
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 											<div class="btn-group mb-sm">
 												<button type="button" data-toggle="dropdown"
 													class="btn dropdown-toggle btn-warning btn-labeled">
@@ -193,7 +141,6 @@
 														<g:Anchor ui:field="selectAllRightPanel">All</g:Anchor>
 													</li>
 													<li>
-<<<<<<< HEAD
 														<g:Anchor ui:field="selectEnglishRightPanel">English</g:Anchor>
 													</li>
 													<li>
@@ -203,14 +150,11 @@
 														<g:Anchor ui:field="selectItalianRightPanel">Italian</g:Anchor>
 													</li>
 													<li>
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 														<g:Anchor ui:field="selectClearRightPanel">Clear</g:Anchor>
 													</li>
 													<li>
 														<g:Anchor ui:field="selectReverseRightPanel">Reverse</g:Anchor>
 													</li>
-<<<<<<< HEAD
 													<!-- add new language here -->
 												</ul>
 											</div>
@@ -219,26 +163,14 @@
 												styleName="btn mb-sm btn-success btn-labeled"
 												ui:field="showAllRightPanel">Show All</g:Button>
 
-=======
-												</ul>
-											</div>
-
-										<g:Button styleName="btn mb-sm btn-success btn-labeled"
-											ui:field="showAllRightPanel">Show All</g:Button>
-											
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 										</div>
 									</div>
 
 									<g:HTMLPanel ui:field="feedbackPanelRightPanel"
 										styleName="alert" visible="false">
 										<em class="fa fa-exclamation-circle fa-lg fa-fw"></em>
-<<<<<<< HEAD
 										<g:InlineLabel
 											ui:field="feedbackLabelRightPanel">feedback</g:InlineLabel>
-=======
-										<g:InlineLabel ui:field="feedbackLabelRightPanel">feedback</g:InlineLabel>
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 										<g:Button ui:field="closeFeedbackPanelRightPanel"
 											styleName="close" text="X" />
 									</g:HTMLPanel>
@@ -250,27 +182,19 @@
 										<form class="form-inline">
 
 											Show
-<<<<<<< HEAD
 											<g:ListBox ui:field="nRecordsRightPanel"
 												width="80px">
-=======
-											<g:ListBox ui:field="nRecordsRightPanel" width="80px">
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 												<g:item value="10">10</g:item>
 												<g:item value="20">20</g:item>
 												<g:item value="30">30</g:item>
 												<g:item value="40">40</g:item>
 												<g:item value="50">50</g:item>
 												<g:item value="100">100</g:item>
-<<<<<<< HEAD
 												<g:item value="all">all</g:item>
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 											</g:ListBox>
 											records per page
 
 											<div class="form-group has-feedback pull-right">
-<<<<<<< HEAD
 												<g:TextBox ui:field="searchRightPanel"
 													styleName="form-control form-control-rounded input-sm" />
 												<span
@@ -280,14 +204,6 @@
 									</p>
 									<g:HTMLPanel
 										ui:field="availableFeatureCellTablePanel" />
-=======
-												<g:TextBox ui:field="searchRightPanel" styleName="form-control form-control-rounded input-sm" />
-												<span class="fa fa-search form-control-feedback text-muted"></span>
-											</div>
-										</form>
-									</p>
-									<g:HTMLPanel ui:field="availableFeatureCellTablePanel" />
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 								</div>
 							</div>
 
@@ -297,13 +213,8 @@
 
 
 					<!-- Details sidebar -->
-<<<<<<< HEAD
 					<g:HTMLPanel ui:field="aeDetailsPanel"
 						styleName="col-lg-3" visible="false">
-=======
-					<g:HTMLPanel ui:field="aeDetailsPanel" styleName="col-lg-3"
-						visible="false">
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 						<div class="panel panel-primary">
 							<div class="panel-heading">
 								Feature Details
@@ -321,7 +232,6 @@
 								</div>
 								<div class="form-group">
 									<p>Version</p>
-<<<<<<< HEAD
 									<g:TextBox styleName="form-control"
 										ui:field="aeVersion" enabled="false" />
 								</div>
@@ -339,28 +249,6 @@
 								</div>
 								<g:Button ui:field="closeAEDetail"
 									styleName="btn btn-sm" text="Close" />
-=======
-									<g:TextBox styleName="form-control" ui:field="aeVersion"
-										enabled="false" />
-								</div>
-								<div class="form-group">
-									<p>Vendor</p>
-									<g:TextBox styleName="form-control" ui:field="aeVendor"
-										enabled="false" />
-								</div>
-								<div class="form-group">
-									<p>
-										Desc
-										<!-- <g:Button ui:field="saveAEDetail" styleName="btn btn-sm btn-primary" -->
-										<!-- text="Save" /> -->
-										ription
-									</p>
-									<g:TextArea height="100px" styleName="form-control"
-										ui:field="aeDescription" enabled="false" />
-								</div>
-								<g:Button ui:field="closeAEDetail" styleName="btn btn-sm"
-									text="Close" />
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 							</div>
 						</div>
 					</g:HTMLPanel>

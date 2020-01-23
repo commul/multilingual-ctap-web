@@ -48,11 +48,7 @@ import com.google.gwt.widgetideas.client.ProgressBar;
 public class AnalysisGenerator extends Composite {
 
 	private static AnalysisGeneratorUiBinder uiBinder = GWT.create(AnalysisGeneratorUiBinder.class);
-<<<<<<< HEAD
 	
-=======
-
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	interface AnalysisGeneratorUiBinder extends UiBinder<Widget, AnalysisGenerator> {
 	}
 
@@ -85,10 +81,7 @@ public class AnalysisGenerator extends Composite {
 	@UiField HTMLPanel analysisDetailPanel;
 	@UiField TextBox createdOn;
 	@UiField TextBox analysisName;
-<<<<<<< HEAD
 	@UiField ListBox analysisLanguageOptionsListBox;
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	@UiField TextArea analysisDescription;
 	@UiField ListBox tagFilterLogicListBox;
 	@UiField TextBox tagFilterKeyword;
@@ -370,7 +363,6 @@ public class AnalysisGenerator extends Composite {
 		};
 		analysisList.addColumn(featureSetColumn, "Feature Set");
 
-<<<<<<< HEAD
 		// the analysis language column
 		TextColumn<Analysis> analysisLanguageColumn = new TextColumn<Analysis>() {
 			@Override
@@ -380,8 +372,6 @@ public class AnalysisGenerator extends Composite {
 		};
 		analysisList.addColumn(analysisLanguageColumn, "Language");
 
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		// the created date column
 		TextColumn<Analysis> createdColumn = new TextColumn<Analysis>() {
 			@Override
@@ -644,11 +634,8 @@ public class AnalysisGenerator extends Composite {
 		analysisIdHidden.setValue(analysis.getId() + "");
 		corpusIdHidden.setValue(analysis.getCorpusID() + "");
 		featureSetIdHidden.setValue(analysis.getFeatureSetID() + "");
-<<<<<<< HEAD
 		setAnalysisLanguageListBox(analysis.getLanguage());
 		setTagFilterLogicListBox(analysis.getLanguage());
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 
 		// get lists
 		getDetailPanelCorpusList();
@@ -751,7 +738,6 @@ public class AnalysisGenerator extends Composite {
 			}
 		}
 	}
-<<<<<<< HEAD
 	//Sets the analysis language list box's selected item
 	private void setAnalysisLanguageListBox(String analysisLanguage) {
 		for(int i = 0; i < analysisLanguageOptionsListBox.getItemCount(); i++) {
@@ -760,8 +746,6 @@ public class AnalysisGenerator extends Composite {
 			}
 		}
 	}
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 
 
 	private void hideDetailPanel() {
@@ -784,10 +768,7 @@ public class AnalysisGenerator extends Composite {
 					"You need to enter a name and select a corpus and a feature set for your analysis.");
 			return;
 		}
-<<<<<<< HEAD
 		
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 
 		//construct the analysis object
 		Analysis analysis = new Analysis();
@@ -798,10 +779,7 @@ public class AnalysisGenerator extends Composite {
 		analysis.setTagFilterLogic(tagFilterLogicListBox.getSelectedValue());
 		analysis.setCorpusID(Integer.parseInt(selectCorpus.getSelectedValue()));
 		analysis.setFeatureSetID(Integer.parseInt(selectFeatureSet.getSelectedValue()));
-<<<<<<< HEAD
 		analysis.setLanguage(analysisLanguageOptionsListBox.getSelectedValue());
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 
 		if (analysis.getId() == -1) {
 			// new analysis
@@ -837,7 +815,6 @@ public class AnalysisGenerator extends Composite {
 					showFeedbackPanel("alert-info", "Analysis details updated!");
 				}
 			});
-<<<<<<< HEAD
 			
 
 			// Check if analysis language is fully supported by feature set
@@ -861,11 +838,6 @@ public class AnalysisGenerator extends Composite {
 
 
 
-=======
-		}
-	}
-
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	//	private Analysis.TagFilterLogic getTagFilterLogic() {
 	//		Analysis.TagFilterLogic tagFilterLogic = Analysis.TagFilterLogic.NOFILTER;
 	//
@@ -962,11 +934,8 @@ public class AnalysisGenerator extends Composite {
 		newAnalysis.setCorpusName("");
 		newAnalysis.setFeatureSetID(0);	
 		newAnalysis.setFeatureSetName("");
-<<<<<<< HEAD
 //		newAnalysis.setLanguage("");
 		newAnalysis.setLanguage(Analysis.AnalysisLanguageOptions.ENGLISH);  // have English as default
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		showDetailPanel(newAnalysis);
 	}
 

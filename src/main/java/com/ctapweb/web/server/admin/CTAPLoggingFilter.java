@@ -23,12 +23,7 @@ public class CTAPLoggingFilter implements Filter {
 
 	@Override
 	public void destroy() {
-<<<<<<< HEAD
 		// Auto-generated method stub
-=======
-		// TODO Auto-generated method stub
-
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	}
 
 	@Override

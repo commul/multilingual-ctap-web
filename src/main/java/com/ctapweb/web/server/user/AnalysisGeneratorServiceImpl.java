@@ -6,10 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.Arrays;
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 import java.util.List;
 
 import org.apache.logging.log4j.Level;
@@ -83,7 +80,6 @@ implements AnalysisGeneratorService {
 		ArrayList<Analysis> analysisList = new ArrayList<Analysis>(limit); 
 
 		//get data from database
-<<<<<<< HEAD
 		String queryStr = ""			 
 				+ "SELECT analysis.id, analysis.owner_id, analysis.name, "
 				+ "analysis.description, "
@@ -92,14 +88,6 @@ implements AnalysisGeneratorService {
 				+ "analysis.tag_filter_logic, tag_filter_keyword, "
 				+ "analysis.featureset_id, feature_set.name AS featureset_name, "
 				+ "analysis.analysis_language, "
-=======
-		String queryStr = ""
-				+ "SELECT analysis.id, analysis.owner_id, analysis.name, "
-				+ "analysis.description, "
-				+ "analysis.corpus_id, corpus.name AS corpus_name, "
-				+ "analysis.tag_filter_logic, tag_filter_keyword, "
-				+ "analysis.featureset_id, feature_set.name AS featureset_name, "
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 				+ "analysis.create_timestamp "
 				+ "FROM analysis "
 				+ "JOIN corpus ON (analysis.corpus_id=corpus.id) "
@@ -116,11 +104,7 @@ implements AnalysisGeneratorService {
 
 			ResultSet rs = ps.executeQuery();
 
-<<<<<<< HEAD
 			// get information of all analysis of this user 
-=======
-			// get infomation of all analysis of this user 
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 			while(rs.next()) {
 				Analysis analysis = new Analysis();
 				analysis.setId(rs.getLong("id"));
@@ -134,10 +118,7 @@ implements AnalysisGeneratorService {
 				analysis.setCreateDate(rs.getDate("create_timestamp"));
 				analysis.setFeatureSetID(rs.getLong("featureset_id"));
 				analysis.setFeatureSetName(rs.getString("featureset_name"));
-<<<<<<< HEAD
 				analysis.setLanguage(rs.getString("analysis_language"));
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 
 				analysisList.add(analysis);
 			}
@@ -189,18 +170,10 @@ implements AnalysisGeneratorService {
 				!featureSelectorServiceImpl.isUserFSOwner(userID, featureSetID)) {
 			throw logger.throwing(new AccessToResourceDeniedException());
 		}
-<<<<<<< HEAD
 		String insertStr = "INSERT INTO "
 				+ "analysis "
 				+ "(owner_id, name, description, corpus_id, tag_filter_logic, tag_filter_keyword, featureset_id, analysis_language, create_timestamp) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
-=======
-
-		String insertStr = "INSERT INTO "
-				+ "analysis (owner_id, name, description, corpus_id, tag_filter_logic, tag_filter_keyword, "
-				+ "featureset_id, create_timestamp) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		try {
 			PreparedStatement ps = dbConnection.prepareStatement(insertStr);
 			ps.setLong(1, userID);
@@ -210,10 +183,7 @@ implements AnalysisGeneratorService {
 			ps.setString(5, analysis.getTagFilterLogic());
 			ps.setString(6, analysis.getTagKeyword());
 			ps.setLong(7, analysis.getFeatureSetID());
-<<<<<<< HEAD
 			ps.setString(8, analysis.getLanguage()); 
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 
 			ps.executeUpdate();
 
@@ -278,18 +248,11 @@ implements AnalysisGeneratorService {
 					!featureSelectorServiceImpl.isUserFSOwner(userID, featureSetID)) {
 				throw logger.throwing(new AccessToResourceDeniedException());
 			}
-<<<<<<< HEAD
 
 			String updateStr = "UPDATE analysis SET name=?, description=?, corpus_id=?, "
 					+ "tag_filter_logic = ?, tag_filter_keyword=?, "
 					+ "featureset_id=?, "
 					+ "analysis_language = ? "
-=======
-			
-			String updateStr = "UPDATE analysis SET name=?, description=?, corpus_id=?, "
-					+ "tag_filter_logic = ?, tag_filter_keyword=?, "
-					+ "featureset_id=? "
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 					+ "WHERE id = ? AND owner_id = ?";
 			PreparedStatement ps = dbConnection.prepareStatement(updateStr);
 			ps.setString(1, analysisName);
@@ -298,14 +261,9 @@ implements AnalysisGeneratorService {
 			ps.setString(4, analysis.getTagFilterLogic());
 			ps.setString(5, analysis.getTagKeyword());
 			ps.setLong(6, featureSetID);
-<<<<<<< HEAD
 			ps.setString(7, analysis.getLanguage());
 			ps.setLong(8, analysisID);
 			ps.setLong(9, userID);
-=======
-			ps.setLong(7, analysisID);
-			ps.setLong(8, userID);
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
@@ -334,10 +292,6 @@ implements AnalysisGeneratorService {
 			if(!AnalysisUtils.isUserAnalysisOwner(userID, analysis.getId())) {
 				throw logger.throwing(new AccessToResourceDeniedException());
 			}
-<<<<<<< HEAD
-=======
-
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 			RunAnalysis runAnalysis = new RunAnalysis(analysis);
 			runAnalysis.run();
 
@@ -415,11 +369,7 @@ implements AnalysisGeneratorService {
 				new ServiceRequestCompletedMessage(serviceName));
 		return analysisStatus;
 	}
-<<<<<<< HEAD
 	
-=======
-
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	@Override
 	public Void updateAnalysisStatus(AnalysisStatus analysisStatus)
 			throws UserNotLoggedInException, AccessToResourceDeniedException, DatabaseException {

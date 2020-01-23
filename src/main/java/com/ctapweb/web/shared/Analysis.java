@@ -4,10 +4,7 @@
 package com.ctapweb.web.shared;
 
 import java.io.Serializable;
-<<<<<<< HEAD
 import java.util.ArrayList;
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 import java.util.Date;
 
 import com.google.gwt.view.client.ProvidesKey;
@@ -30,10 +27,7 @@ public class Analysis implements Serializable {
 	private long featureSetID;
 	private String featureSetName;
 	private Date createDate;
-<<<<<<< HEAD
 	private String language;
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 
 	/**
 	 * The key provider that provides the unique ID of a contact.
@@ -75,7 +69,6 @@ public class Analysis implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-<<<<<<< HEAD
 	
 	public String getLanguage() {
 		return language;
@@ -84,8 +77,6 @@ public class Analysis implements Serializable {
 	public void setLanguage(String language) {
 		this.language = language;
 	}
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 
 	public String getDescription() {
 		return description;
@@ -150,11 +141,7 @@ public class Analysis implements Serializable {
 	public void setTagFilterLogic(String tagFilterLogic) {
 		this.tagFilterLogic = tagFilterLogic;
 	}
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	public static class TagFilterLogic {
 		public static String NOFILTER = "NOFILTER"; 
 		public static String EQUALS = "EQUALS"; 
@@ -163,13 +150,10 @@ public class Analysis implements Serializable {
 		public static String ENDSWITH = "ENDSWITH"; 
 	}
 	
-<<<<<<< HEAD
 	public static class AnalysisLanguageOptions {
 		public static String ENGLISH = "EN"; 
 		public static String GERMAN = "DE";
 		public static String ITALIAN = "IT";
 	}
 	
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 }

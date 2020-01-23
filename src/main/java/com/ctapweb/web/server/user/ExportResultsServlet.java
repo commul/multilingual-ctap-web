@@ -6,16 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-=======
-import java.util.List;
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -85,15 +81,10 @@ public class ExportResultsServlet extends HttpServlet {
 			resp.setBufferSize(buffer.length);
 
 			if("long".equals(tableType)) {
-<<<<<<< HEAD
 				//logger.info("IS LONG");
 				getLongTable();
 			} else if ("wide".equals(tableType)) {
 				//logger.info("IS WIDE");
-=======
-				getLongTable();
-			} else if ("wide".equals(tableType)) {
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 				getWideTable();
 			}
 
@@ -134,7 +125,6 @@ public class ExportResultsServlet extends HttpServlet {
 			respStream.print(rs.getDouble("value") + "\n");
 		} 
 	}
-<<<<<<< HEAD
 	
 	//gets the results as a wide table: new, with a hashmap instead of an arraylist
 			private void getWideTable() throws SQLException, IOException {
@@ -282,11 +272,6 @@ public class ExportResultsServlet extends HttpServlet {
 	//gets the results as a wide table
 	private void getWideTableOld() throws SQLException, IOException {
 		logger.info("in getWideTable");
-=======
-
-	//gets the results as a wide table
-	private void getWideTable() throws SQLException, IOException {
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		//get feature names
 		List<String> featureNames = new ArrayList<>();
 
@@ -354,8 +339,5 @@ public class ExportResultsServlet extends HttpServlet {
 					featureValuesStr.substring(0, featureValuesStr.length() - 1) + "\n");
 		}
 	}
-<<<<<<< HEAD
 	*/
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 }

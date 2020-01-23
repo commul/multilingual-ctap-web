@@ -643,15 +643,11 @@ public class AdminAE extends Composite {
 	@UiHandler("nRecords")
 	void onNRecordsClick(ClickEvent e) {
 		logger.finer("User clicked nRecords button.");
-<<<<<<< HEAD
 		if (nRecords.getSelectedValue().equals("all")) {
 			aeList.setVisibleRange(0, aeList.getRowCount());
 		} else {
 			aeList.setVisibleRange(0, Integer.parseInt(nRecords.getSelectedValue()));
 		}
-=======
-		aeList.setVisibleRange(0, Integer.parseInt(nRecords.getSelectedValue()));
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	}
 
 	protected class CancelProgressBarTextFormatter extends ProgressBar.TextFormatter {

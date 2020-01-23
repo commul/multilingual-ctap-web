@@ -8,11 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-<<<<<<< HEAD
 import org.apache.bcel.generic.NEWARRAY;
 
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 import com.google.gwt.view.client.ProvidesKey;
 
 
@@ -28,10 +25,7 @@ public class AnalysisEngine implements Serializable {
 	private String type = AEType.ANNOTATOR; 
 	private String version = "";
 	private String vendor = "";
-<<<<<<< HEAD
 	private List<String> supportedLanguages = new ArrayList<>();
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	private String description = "";
 	private String descriptorFileName = "";
 	private String descriptorFileContent = "";
@@ -133,7 +127,6 @@ public class AnalysisEngine implements Serializable {
 	public void setAeDependency(List<AnalysisEngine> aeDependency) {
 		this.aeDependency = aeDependency;
 	}
-<<<<<<< HEAD
 	
 	public List<String> getSupportedLanguages() {
 		return supportedLanguages;
@@ -151,8 +144,6 @@ public class AnalysisEngine implements Serializable {
 	public void setSupportedLanguages(List<String> supportedLanguages) {
 		this.supportedLanguages = supportedLanguages;
 	}
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 
 	public String getType() {
 		return type;

@@ -5,10 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.Arrays;
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 import java.util.List;
 
 import org.apache.logging.log4j.Level;
@@ -102,21 +99,14 @@ implements FeatureSelectorService {
 
 		//get data from database
 		String queryStr = ""
-<<<<<<< HEAD
 				+ "SELECT id, owner_id, name, description"
 				+ ", supported_languages" 
 				+ ", create_timestamp " 
-=======
-				+ "SELECT id, owner_id, name, description, create_timestamp "
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 				+ "FROM feature_set "
 				+ "WHERE owner_id=? "
 				+ "ORDER BY id DESC "
 				+ "LIMIT ? OFFSET ?";
-<<<<<<< HEAD
 
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		PreparedStatement ps;
 		try {
 			ps = dbConnection.prepareStatement(queryStr);
@@ -133,10 +123,7 @@ implements FeatureSelectorService {
 				featureSet.setOwnerId(rs.getLong("owner_id"));
 				featureSet.setName(rs.getString("name"));
 				featureSet.setDescription(rs.getString("description"));
-<<<<<<< HEAD
 				featureSet.setSupportedLanguages(Arrays.asList((String[])rs.getArray("supported_languages").getArray())); 
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 				featureSet.setCreateDate(rs.getDate("create_timestamp"));
 				featureSetList.add(featureSet);
 			}
@@ -160,25 +147,17 @@ implements FeatureSelectorService {
 		if(featureSet.getName().isEmpty()) {
 			throw new EmptyInfoException();
 		}
-<<<<<<< HEAD
 		String insertStr = "INSERT INTO feature_set (owner_id, name, description,"
 				+ " supported_languages, " 
 				+ " create_timestamp) "
 				+ "VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)";
 
-=======
-		String insertStr = "INSERT INTO feature_set (owner_id, name, description, create_timestamp) "
-				+ "VALUES (?, ?, ?, CURRENT_TIMESTAMP)";
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		try {
 			PreparedStatement ps = dbConnection.prepareStatement(insertStr);
 			ps.setLong(1, userID);
 			ps.setString(2, featureSet.getName());
 			ps.setString(3, featureSet.getDescription());
-<<<<<<< HEAD
 			ps.setArray(4, dbConnection.createArrayOf("text", featureSet.getSupportedLanguages().toArray())); 
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 
 			ps.executeUpdate();
 
@@ -255,11 +234,7 @@ implements FeatureSelectorService {
 			ps.setLong(3, featureSet.getId());
 			ps.setLong(4, userID);
 			ps.executeUpdate();
-<<<<<<< HEAD
 			
-=======
-
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		} catch (SQLException e) {
 			logger.warn("Error occured while updating feature set info... " + e.getMessage());
 			throw new DatabaseException(e.getMessage());
@@ -305,10 +280,7 @@ implements FeatureSelectorService {
 		return featureCount;
 	}
 
-<<<<<<< HEAD
 	// TODO why is this method not in FeatureSetUtils?
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	@Override
 	public List<AnalysisEngine> getFeatureList(long featureSetID, int offset, int limit)
 			throws UserNotLoggedInException, AccessToResourceDeniedException, DatabaseException {
@@ -324,13 +296,9 @@ implements FeatureSelectorService {
 		}
 
 		//get data from database
-<<<<<<< HEAD
 		/*
 		String queryStr = "SELECT ae.id, ae.name, ae.version, ae.vendor, ae.description, ae.create_timestamp "
 				+ ", ae.supported_languages "	
-=======
-		String queryStr = "SELECT ae.id, ae.name, ae.version, ae.vendor, ae.description, ae.create_timestamp " 
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 				+ "FROM analysis_engine AS ae, "
 				+ "     fs_cf, feature_set AS fs "
 				+ "WHERE ae.id = fs_cf.cf_id "
@@ -338,7 +306,6 @@ implements FeatureSelectorService {
 				+ "     AND fs_cf.fs_id=? "
 				+ "ORDER BY id DESC "
 				+ "LIMIT ? OFFSET ?";
-<<<<<<< HEAD
 		*/
 		String queryStr = "SELECT ae.id, ae.name, ae.version, ae.vendor, ae.description, ae.create_timestamp "
 				+ ", ae.supported_languages "	
@@ -349,8 +316,6 @@ implements FeatureSelectorService {
 				+ "     AND fs_cf.fs_id=? "
 				+ "ORDER BY ae.name "
 				+ "LIMIT ? OFFSET ?";
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		PreparedStatement ps;
 		try {
 			ps = dbConnection.prepareStatement(queryStr);
@@ -365,10 +330,7 @@ implements FeatureSelectorService {
 				AnalysisEngine ae = new AnalysisEngine();
 				ae.setId(rs.getLong("id"));
 				ae.setName(rs.getString("name"));
-<<<<<<< HEAD
 				ae.setSupportedLanguages(Arrays.asList((String[])rs.getArray("supported_languages").getArray())); 
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 				ae.setType(AEType.FEATURE_EXTRACTOR);
 				ae.setVersion(rs.getString("version"));
 				ae.setVendor(rs.getString("vendor"));
@@ -386,7 +348,6 @@ implements FeatureSelectorService {
 		return fsFeatureList;
 	}
 
-<<<<<<< HEAD
 	// returns java list of languages supported by all features in feature set
 	public List<String> inferLanguagesSupportedByFS(long featureSetID) 
 throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedException {
@@ -512,8 +473,6 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 		return null;
 	}
 
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	@Override
 	public Void removeFeatureFromFS(long featureSetID, long featureID)
 			throws UserNotLoggedInException,AccessToResourceDeniedException, DatabaseException {
@@ -539,13 +498,10 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 
 		logger.log(Level.TRACE, LogMarker.CTAP_SERVER_MARKER, 
 				new ServiceRequestCompletedMessage(serviceName));
-<<<<<<< HEAD
 
 		// update supported languages of feature set in DB
 		updateSupportedLanguagesOfFeatureSet(featureSetID); 
 
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		return null;
 	}
 
@@ -588,20 +544,14 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 		List<AnalysisEngine> availableFeatureList = new ArrayList<>(limit); 
 
 		//get data from database
-<<<<<<< HEAD
 		/*
 		String queryStr = ""
 				+ "SELECT id, name, version, vendor, description, create_timestamp " 
 				+ ", supported_languages "
-=======
-		String queryStr = ""
-				+ "SELECT id, name, version, vendor, description, create_timestamp " 
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 				+ "FROM analysis_engine "
 				+ "WHERE type = ?"
 				+ "ORDER BY id DESC "
 				+ "LIMIT ? OFFSET ?";
-<<<<<<< HEAD
 		*/
 		String queryStr = ""
 				+ "SELECT id, name, version, vendor, description, create_timestamp " 
@@ -610,8 +560,6 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 				+ "WHERE type = ?"
 				+ "ORDER BY name "
 				+ "LIMIT ? OFFSET ?";
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		try {
 			PreparedStatement ps = dbConnection.prepareStatement(queryStr);
 			ps.setString(1, AEType.FEATURE_EXTRACTOR.toString());
@@ -626,10 +574,7 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 				ae.setId(rs.getLong("id"));
 				ae.setName(rs.getString("name"));
 				ae.setType(AEType.FEATURE_EXTRACTOR);
-<<<<<<< HEAD
 				ae.setSupportedLanguages(Arrays.asList((String[])rs.getArray("supported_languages").getArray()));
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 				ae.setVersion(rs.getString("version"));
 				ae.setVendor(rs.getString("vendor"));
 				ae.setDescription(rs.getString("description"));
@@ -686,13 +631,10 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 
 		logger.log(Level.TRACE, LogMarker.CTAP_SERVER_MARKER, 
 				new ServiceRequestCompletedMessage(serviceName));
-<<<<<<< HEAD
 
 		// update supported languages of feature set in DB
 		updateSupportedLanguagesOfFeatureSet(featureSetID); 
 
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		return null;
 	}
 
@@ -736,11 +678,7 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 			logger.warn("Database error: " + e.getMessage());
 			throw new DatabaseException(e.getMessage());
 		}
-<<<<<<< HEAD
 		
-=======
-
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		logger.log(Level.TRACE, LogMarker.CTAP_SERVER_MARKER, 
 				new ServiceRequestCompletedMessage(serviceName));
 		return featureSetName;
@@ -770,7 +708,6 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 	}
 
 	@Override
-<<<<<<< HEAD
 	public Boolean doesFeatureSetSupportLanguage(long featureSetID, String languageCode) throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedException {
 		boolean isSupported = false;
 		String serviceName = "doesFeatureSetSupportLanguage";
@@ -843,8 +780,6 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 	}
 
 	@Override
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	public Integer getFeatureCount(String keyword) 
 			throws UserNotLoggedInException, DatabaseException {
 		String serviceName = "getFeatureCount(keyword)";
@@ -907,18 +842,13 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 		//				+ "     AND ae.name ILIKE '%sd%' "
 		//				+ "ORDER BY id DESC "
 		//				+ "LIMIT ? OFFSET ?";
-<<<<<<< HEAD
 		/*
 		String queryStr = "SELECT id, name, version, vendor, description, create_timestamp "
 				+ ", supported_languages "	
-=======
-		String queryStr = "SELECT id, name, version, vendor, description, create_timestamp "
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 				+ "FROM analysis_engine "
 				+ "WHERE name ILIKE ? AND type = ?"
 				+ "ORDER BY id DESC "
 				+ "LIMIT ? OFFSET ?";
-<<<<<<< HEAD
 		*/
 		String queryStr = "SELECT id, name, version, vendor, description, create_timestamp "
 				+ ", supported_languages "	
@@ -926,8 +856,6 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 				+ "WHERE name ILIKE ? AND type = ?"
 				+ "ORDER BY name "
 				+ "LIMIT ? OFFSET ?";
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		PreparedStatement ps;
 		try {
 			ps = dbConnection.prepareStatement(queryStr);
@@ -938,20 +866,13 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 
 			ResultSet rs = ps.executeQuery();
 
-<<<<<<< HEAD
 			// get information of all features included in this feature set
-=======
-			// get infomation of all features included in this feature set
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 			while(rs.next()) {
 				AnalysisEngine ae = new AnalysisEngine();
 				ae.setId(rs.getLong("id"));
 				ae.setName(rs.getString("name"));
 				ae.setType(AEType.FEATURE_EXTRACTOR);
-<<<<<<< HEAD
 				ae.setSupportedLanguages(Arrays.asList((String[])rs.getArray("supported_languages").getArray()));
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 				ae.setVersion(rs.getString("version"));
 				ae.setVendor(rs.getString("vendor"));
 				ae.setDescription(rs.getString("description"));
@@ -1022,20 +943,15 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 		}
 
 		//get data from database
-<<<<<<< HEAD
 		/*
 		String queryStr = "SELECT ae.id, ae.name, ae.version, ae.vendor, ae.description, ae.create_timestamp " 
 				+ ", ae.supported_languages "	
-=======
-		String queryStr = "SELECT ae.id, ae.name, ae.version, ae.vendor, ae.description, ae.create_timestamp " 
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 				+ "FROM analysis_engine AS ae, fs_cf "
 				+ "WHERE ae.id = fs_cf.cf_id "
 				+ "     AND fs_cf.fs_id=? "
 				+ "     AND ae.name ILIKE ? "
 				+ "ORDER BY id DESC "
 				+ "LIMIT ? OFFSET ?";
-<<<<<<< HEAD
 		*/
 		String queryStr = "SELECT ae.id, ae.name, ae.version, ae.vendor, ae.description, ae.create_timestamp " 
 				+ ", ae.supported_languages "	
@@ -1045,8 +961,6 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 				+ "     AND ae.name ILIKE ? "
 				+ "ORDER BY ae.name "
 				+ "LIMIT ? OFFSET ?";
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 		//		String queryStr = "SELECT id, name, version, vendor, description, create_timestamp "
 		//				+ "FROM analysis_engine "
 		//				+ "WHERE name ILIKE ? "
@@ -1062,20 +976,13 @@ throws DatabaseException, UserNotLoggedInException, AccessToResourceDeniedExcept
 
 			ResultSet rs = ps.executeQuery();
 
-<<<<<<< HEAD
 			// get information of all features included in this feature set
-=======
-			// get infomation of all features included in this feature set
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 			while(rs.next()) {
 				AnalysisEngine ae = new AnalysisEngine();
 				ae.setId(rs.getLong("id"));
 				ae.setName(rs.getString("name"));
 				ae.setType(AEType.FEATURE_EXTRACTOR);
-<<<<<<< HEAD
 				ae.setSupportedLanguages(Arrays.asList((String[])rs.getArray("supported_languages").getArray())); 
-=======
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 				ae.setVersion(rs.getString("version"));
 				ae.setVendor(rs.getString("vendor"));
 				ae.setDescription(rs.getString("description"));

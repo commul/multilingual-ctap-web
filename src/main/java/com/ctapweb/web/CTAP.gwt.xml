@@ -12,7 +12,6 @@
 	<set-property name="gwt.logging.enabled" value="TRUE" />
 	<set-property name="gwt.logging.simpleRemoteHandler"
 		value="ENABLED" />
-<<<<<<< HEAD
 	<!--<set-property name="gwt.logging.simpleRemoteHandler"
 		value="DISABLED" />-->
 	<set-property name="gwt.logging.consoleHandler" value="DISABLED" />
@@ -24,10 +23,6 @@
 	<set-property name="gwt.logging.PopupLogHandler" value="ENABLED" />-->
 	
 	
-=======
-	<set-property name="gwt.logging.consoleHandler" value="DISABLED" />
-
->>>>>>> cafdcdc3456ebb62b5b231073c27ffde69ad2ddc
 	<inherits name="org.moxieapps.gwt.uploader.Uploader" />
 	<set-configuration-property name='xsiframe.failIfScriptTag'
 		value='FALSE' />
