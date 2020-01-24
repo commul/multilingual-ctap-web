@@ -45,7 +45,8 @@ It was developed for English by Xiaobin Chen at the Tübingen University Computa
 									(2) Now you can push the <i>Open</i> button and add files to the corpus. Click on the <i>Import</i> button and then on the <i>Add files</i> button. This will allow you to choose files from your file system. If you have few files to analyse, you can also drag and drop them in the <i>Drop files here</i> field.<br/>
 									 (3) Corpus files content. The files have to be in plain text format, containing texts in English, German or Italian that are longer than 51 characters. If a text it too short, it won’t be analysed by the tool.<br/>
 									 (4) Corpus files language. If a text is in several languages, the analysis result will be erroneous, because most natural language processing components on which CTAP depends are language specific and when performing an analysis you will have to choose only one language.<br/>
-									 (5) The files you have just added will appear in the <i>List of Texts</i>. By clicking the <i>Edit</i> button you may modify their text content.</div>
+									 (5) The files you have just added will appear in the <i>List of Texts</i>. By clicking the <i>Edit</i> button you may modify their text content.<br/>
+									 <b>NB:</b>CTAP uses language processing components that work correctly only on orthographically correct texts. If a text contains orthographic errors, most readability feature values will be wrong.</div>
 								</div>
 							</div>
 							<div class="panel panel-default">
@@ -103,6 +104,21 @@ Push on the arrow in order to run the analysis. A progress bar will appear on to
 You can also download the analysis results in .CSV wide format by clicking on <i>Results</i>.<br/><br/><br/>
 								<img src="img/result-visualiser.png" width="1000" height="480" alt="Result Visualizer"	class="block-center img-rounded" />
 								</div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div id="headingFour" role="tab" class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"
+											aria-expanded="false" aria-controls="collapseFour" class="collapsed">
+											Feedback</a>
+									</h4>
+								</div>
+								<div id="collapseFour" role="tabpanel" aria-labelledby="headingFour"
+									class="panel-collapse collapse">
+									<div class="panel-body">If you have any questions or suggestions about CTAP, you can write an email to the following address:<br/>
+									Institute for Applied Linguistics, Eurac Research, Language Technology group: <i>applinglt</i> at <i>scientificnet</i> dot <i>onmicrosoft</i> dot <i>com</i>
+									</div>
 								</div>
 							</div>
 						</div>
