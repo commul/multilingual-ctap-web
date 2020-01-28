@@ -107,17 +107,17 @@ You can also download the analysis results in .CSV wide format by clicking on <i
 								</div>
 							</div>
 							<div class="panel panel-default">
-								<div id="headingFour" role="tab" class="panel-heading">
+								<div id="headingSix" role="tab" class="panel-heading">
 									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"
-											aria-expanded="false" aria-controls="collapseFour" class="collapsed">
-											Feedback</a>
+										<a data-toggle="collapse" data-parent="#accordion" href="#collapseSix"
+											aria-expanded="false" aria-controls="collapseSix" class="collapsed">
+											Have a question or a suggestion?</a>
 									</h4>
 								</div>
-								<div id="collapseFour" role="tabpanel" aria-labelledby="headingFour"
+								<div id="collapseSix" role="tabpanel" aria-labelledby="headingSix"
 									class="panel-collapse collapse">
 									<div class="panel-body">If you have any questions or suggestions about CTAP, you can write an email to the following address:<br/>
-									Institute for Applied Linguistics, Eurac Research, Language Technology group: <i>applinglt</i> at <i>scientificnet</i> dot <i>onmicrosoft</i> dot <i>com</i>
+									<b>Institute for Applied Linguistics, Eurac Research, Language Technology group:</b> <b><i>applinglt</i></b> at <b><i>scientificnet</i></b> dot <b><i>onmicrosoft</i></b> dot <b><i>com</i></b>
 									</div>
 								</div>
 							</div>
@@ -125,8 +125,6 @@ You can also download the analysis results in .CSV wide format by clicking on <i
 					</div>
 				</div>
 				<!-- END row -->
-
-
 			</div>
 		</section>
 

@@ -19,12 +19,13 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SendFeedback extends Composite {
-	/*
+
 	private static SendFeedbackUiBinder uiBinder = GWT.create(SendFeedbackUiBinder.class);
 
 	interface SendFeedbackUiBinder extends UiBinder<Widget, SendFeedback> {
 	}
 
+	/*
 	@UiField HTMLPanel subjectFormGroup;
 	@UiField TextBox subject;
 	@UiField Label subjectError;
@@ -35,15 +36,17 @@ public class SendFeedback extends Composite {
 
 	@UiField Label feedbackLabel;
 	@UiField Button send;
+	*/
 
 	Logger logger = Logger.getLogger(CorpusManager.class.getName());
 
 	public SendFeedback() {
 		initWidget(uiBinder.createAndBindUi(this));
 
-		initWidgetStyles();
+		//initWidgetStyles();
 	}
-
+	
+	/*
 	private void initWidgetStyles() {
 		// set placeholder
 		String formGroupNormalStyle = "form-group";
