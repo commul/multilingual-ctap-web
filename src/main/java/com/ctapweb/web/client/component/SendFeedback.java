@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class SendFeedback extends Composite {
-
+	/*
 	private static SendFeedbackUiBinder uiBinder = GWT.create(SendFeedbackUiBinder.class);
 
 	interface SendFeedbackUiBinder extends UiBinder<Widget, SendFeedback> {
@@ -111,4 +111,5 @@ public class SendFeedback extends Composite {
 		subjectError.setText(errorMsg);
 		subjectError.setVisible(true);
 	}
+	*/
 }
