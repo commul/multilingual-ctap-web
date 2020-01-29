@@ -94,7 +94,7 @@ Push on the arrow in order to run the analysis. A progress bar will appear on to
 									<h4 class="panel-title">
 										<a data-toggle="collapse" data-parent="#accordion" href="#collapseFive"
 											aria-expanded="false" aria-controls="collapseFive" class="collapsed">
-											How to use the Result Visualizer</a>
+											How to use the Result Visualizer?</a>
 									</h4>
 								</div>
 								<div id="collapseFive" role="tabpanel" aria-labelledby="headingFive"
